@@ -23,6 +23,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     private SlimeState currentState = SlimeState.Idle;
     private Rigidbody rb;
     private Collider col;
+    private Animator anim;
     private Vector3 initialPosition;
     private float timer;
     private int attacksLeft;
@@ -38,6 +39,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     public void Awake(){
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
+        anim = GetComponent<Animator>();
         initialPosition = transform.position;
     }
 
@@ -65,13 +67,22 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 initialPosition = transform.position;
 
                 timer = lifeExpectancy;
+
+                anim.SetBool("isGrounded", true);
+                anim.SetBool("TopEnemy", false);
+                anim.SetBool("ChargingAttack", false);
                 break;
             case SlimeState.Charging:
                 GetComponent<Movable>().enabled = false;
+                rb.velocity = Vector3.zero;
                 GetComponent<MoveToNearbyPosition>().enabled = false; // Unico Moveto com update
 
                 col.isTrigger = false;
                 rb.useGravity = true;
+
+                anim.SetBool("isGrounded", true);
+                anim.SetBool("TopEnemy", false);
+                anim.SetBool("ChargingAttack", true);
                 break;
             case SlimeState.Flying:
                 GetComponent<Movable>().enabled = false;
@@ -80,6 +91,10 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 col.isTrigger = true;
                 rb.useGravity = false;
                 initialPosition = transform.position;
+
+                anim.SetBool("isGrounded", false);
+                anim.SetBool("TopEnemy", false);
+                anim.SetBool("ChargingAttack", false);
                 break;
             case SlimeState.Attacking:
                 GetComponent<Movable>().enabled = false;
@@ -89,6 +104,10 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 rb.useGravity = false;
 
                 attacksLeft = nAttacks;
+
+                anim.SetBool("isGrounded", false);
+                anim.SetBool("TopEnemy", true);
+                anim.SetBool("ChargingAttack", false);
                 break;
             case SlimeState.Returning:
                 GetComponent<Movable>().enabled = true;
@@ -99,6 +118,10 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
 
                 col.isTrigger = false;
                 rb.useGravity = true;
+
+                anim.SetBool("isGrounded", true);
+                anim.SetBool("TopEnemy", false);
+                anim.SetBool("ChargingAttack", false);
                 break;
             case SlimeState.Following:
                 GetComponent<Movable>().enabled = true;
@@ -109,6 +132,10 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
 
                 col.isTrigger = false;
                 rb.useGravity = true;
+
+                anim.SetBool("isGrounded", true);
+                anim.SetBool("TopEnemy", false);
+                anim.SetBool("ChargingAttack", false);
                 break;
         }
         currentState = newState;
@@ -132,8 +159,12 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
             if(isMainBody){
                 GetComponent<MeshRenderer>().enabled = false;
             }else{
+                GetComponent<Movable>().enabled = false;
+                col.enabled = false;
+                rb.velocity = Vector3.zero;
+                rb.isKinematic = true;
                 // Inicia a animação de morte, que precisa chamar Die() no final
-                Die(); // Placeholder
+                anim.SetTrigger("Die");
             }
         }
     }
@@ -157,6 +188,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
 
     public bool TakeDamage(int dmg){
         Shrink(dmg);
+        anim.SetTrigger("Hit");
         return (HP <= 0);
     }
 
@@ -194,7 +226,6 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     }
 
     public void Update(){
-        // Colocar a maquina de estados aqui
         switch(currentState){
             case SlimeState.Idle:
                 if(timer <= 0){
@@ -216,5 +247,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
             case SlimeState.Following:
                 break;
         }
+
+        anim.SetFloat("VerticalSpeed", rb.velocity.y);
     }
 }
