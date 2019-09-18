@@ -1,44 +1,68 @@
 fileFormatVersion: 2
-guid: 43d020d7097cd004ab1a605c6b45224b
+guid: 1793802de701ca4499eb04bfd79d580f
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: Back
-    100002: Bottom
-    100004: Front
-    100006: Left
-    100008: Right
-    100010: Root
-    100012: //RootNode
-    100014: Slime
-    100016: Slime_Body
-    100018: Top
+    100002: Back_end
+    100004: Bottom
+    100006: Bottom_end
+    100008: Front
+    100010: Front_end
+    100012: Left
+    100014: Left_end
+    100016: Right
+    100018: Right_end
+    100020: Root
+    100022: //RootNode
+    100024: Slime
+    100026: Slime_Body
+    100028: Top
+    100030: Top_end
     400000: Back
-    400002: Bottom
-    400004: Front
-    400006: Left
-    400008: Right
-    400010: Root
-    400012: //RootNode
-    400014: Slime
-    400016: Slime_Body
-    400018: Top
+    400002: Back_end
+    400004: Bottom
+    400006: Bottom_end
+    400008: Front
+    400010: Front_end
+    400012: Left
+    400014: Left_end
+    400016: Right
+    400018: Right_end
+    400020: Root
+    400022: //RootNode
+    400024: Slime
+    400026: Slime_Body
+    400028: Top
+    400030: Top_end
     2100000: Body
-    2100002: RightEye__EyeTestWhite_png
-    2100004: InsideBody
-    2100006: LeftEye__EyeTestWhite_png
+    2100002: InsideBody
+    2100004: RightEye
+    2100006: LeftEye
+    2100008: RightEye__EyeTestWhite_png
+    2100010: LeftEye__EyeTestWhite_png
     4300000: Slime_Body
-    7400000: Default Take
-    7400002: AirEnd
-    7400004: AirStart
-    7400006: Death
-    7400008: Hit
-    7400010: Idle
-    7400012: Jump
-    7400014: OnTop
-    7400016: PrepareAttack
-    7400018: ReleaseAttack
-    7400020: Idle (1)
+    7400000: Slime|AirEnd
+    7400002: Slime|AirStart
+    7400004: Slime|Death
+    7400006: Slime|Hit
+    7400008: Slime|Idle
+    7400010: Slime|Jump
+    7400012: Slime|OnTop
+    7400014: Slime|PrepareAttack
+    7400016: Slime|ReleaseAttack
+    7400018: Default Take
+    7400020: AirEnd
+    7400022: AirStart
+    7400024: Death
+    7400026: Hit
+    7400028: Idle
+    7400030: Jump
+    7400032: OnTop
+    7400034: PrepareAttack
+    7400036: ReleaseAttack
+    7400038: AirStart
+    7400040: 'AirStart '
     9500000: //RootNode
     13700000: Slime_Body
   externalObjects: {}
@@ -70,10 +94,38 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle (1)
-      takeName: Idle
+      name: Default Take
+      takeName: Default Take
       firstFrame: 0
-      lastFrame: 199
+      lastFrame: 23
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: AirEnd
+      takeName: AirEnd
+      firstFrame: 0
+      lastFrame: 2
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -98,45 +150,17 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: AirEnd
-      takeName: AirEnd
-      firstFrame: 0
-      lastFrame: 1
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: AirStart
+      name: 'AirStart '
       takeName: AirStart
       firstFrame: 0
-      lastFrame: 1
+      lastFrame: 2
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -352,7 +376,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 100
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
