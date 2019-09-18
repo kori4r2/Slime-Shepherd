@@ -14,10 +14,10 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Enemy
+  - Slime
+  - Projectile
   - 
   - 
   - 
