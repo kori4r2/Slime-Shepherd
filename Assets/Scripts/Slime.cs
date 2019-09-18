@@ -145,7 +145,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
         if(isMainBody){
             GetComponent<Launcher>().Reload(count);
             if(size == 0){
-                GetComponent<MeshRenderer>().enabled = true;
+                GetComponent<SkinnedMeshRenderer>().enabled = true;
             }
         }
         size += count;
@@ -157,7 +157,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
         rb.mass = size;
         if(size <= 0){
             if(isMainBody){
-                GetComponent<MeshRenderer>().enabled = false;
+                GetComponent<SkinnedMeshRenderer>().enabled = false;
             }else{
                 GetComponent<Movable>().enabled = false;
                 col.enabled = false;
