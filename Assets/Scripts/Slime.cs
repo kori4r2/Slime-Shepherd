@@ -205,8 +205,8 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
             RaycastHit hit;
             if(Physics.Raycast(transform.position, other.transform.position, out hit)){
                 rb.velocity = Vector3.zero;
-                transform.position = hit.point;
                 transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal);
+                transform.position = hit.point;
                 other.GetComponent<Enemy>().Attach(this);
                 SetState(SlimeState.Attacking);
             }
