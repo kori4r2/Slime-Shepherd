@@ -11,7 +11,8 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
         Following,
         Flying,
         Attacking,
-        Returning
+        Returning,
+        Null
     }
 
     [SerializeField] private LayerMask enemyLayers;
@@ -20,13 +21,18 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     [SerializeField] private int nAttacks = 5;
 
     public static Slime mainBody;
-    private SlimeState currentState = SlimeState.Idle;
+    public SlimeState CurrentState { get; private set; }
     private Rigidbody rb;
     private Collider col;
     private Animator anim;
     private Vector3 initialPosition;
     private float timer;
     private int attacksLeft;
+    private bool isGrounded;
+    private bool CanJump { get { return (jumpTimer <= 0f); } }
+    [SerializeField] private float jumpCooldown = 0.4f;
+    [SerializeField] private float jumpHeight = 0.35f;
+    private float jumpTimer = 0;
     public int HP {
         get => size;
         private set{
@@ -41,111 +47,136 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
         col = GetComponent<Collider>();
         anim = GetComponent<Animator>();
         initialPosition = transform.position;
+        if(isMainBody){
+            mainBody = this;
+            size = GetComponent<Launcher>().Ammo;
+        }else{
+            GetComponent<MoveToTarget>().target = mainBody.transform;
+            SetState(SlimeState.Null);
+        }
     }
 
     public void Start(){
         if(isMainBody){
-            mainBody = this;
             size = GetComponent<Launcher>().Ammo;
+            GetComponent<MoveToTarget>().target = Shepherd.instance.transform;
             SetState(SlimeState.Following);
-        }else{
-            GetComponent<MoveToTarget>().target = mainBody.transform;
-            SetState(SlimeState.Flying);
         }
     }
 
     public void SetState(SlimeState newState){
         switch(newState){
             case SlimeState.Idle:
-                GetComponent<Movable>().enabled = true;
+                GetComponent<Movable>().CanMove = true;
                 GetComponent<MoveToNearbyPosition>().enabled = true; // Unico Moveto com update
 
                 GetComponent<Movable>().nextPosition = GetComponent<MoveToNearbyPosition>();
 
                 col.isTrigger = false;
                 rb.useGravity = true;
+                rb.isKinematic = false;
                 initialPosition = transform.position;
 
                 timer = lifeExpectancy;
 
-                anim.SetBool("isGrounded", true);
+                // anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
                 break;
             case SlimeState.Charging:
-                GetComponent<Movable>().enabled = false;
+                GetComponent<Movable>().CanMove = false;
                 rb.velocity = Vector3.zero;
-                GetComponent<MoveToNearbyPosition>().enabled = false; // Unico Moveto com update
+                GetComponent<MoveToNearbyPosition>().Deactivate(); // Unico Moveto com update
 
                 col.isTrigger = false;
                 rb.useGravity = true;
+                rb.isKinematic = false;
 
-                anim.SetBool("isGrounded", true);
+                // anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", true);
                 break;
             case SlimeState.Flying:
-                GetComponent<Movable>().enabled = false;
-                GetComponent<MoveToNearbyPosition>().enabled = false; // Unico Moveto com update
+                GetComponent<Movable>().CanMove = false;
+                GetComponent<MoveToNearbyPosition>().Deactivate(); // Unico Moveto com update
 
                 col.isTrigger = true;
                 rb.useGravity = false;
+                rb.isKinematic = false;
                 initialPosition = transform.position;
 
-                anim.SetBool("isGrounded", false);
+                // anim.SetBool("isGrounded", false);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
                 break;
             case SlimeState.Attacking:
-                GetComponent<Movable>().enabled = false;
-                GetComponent<MoveToNearbyPosition>().enabled = false; // Unico Moveto com update
+                GetComponent<Movable>().CanMove = false;
+                GetComponent<MoveToNearbyPosition>().Deactivate(); // Unico Moveto com update
 
                 col.isTrigger = true;
                 rb.useGravity = false;
+                rb.isKinematic = true;
 
                 attacksLeft = nAttacks;
 
-                anim.SetBool("isGrounded", false);
+                // anim.SetBool("isGrounded", false);
                 anim.SetBool("TopEnemy", true);
                 anim.SetBool("ChargingAttack", false);
                 break;
             case SlimeState.Returning:
-                GetComponent<Movable>().enabled = true;
-                GetComponent<MoveToNearbyPosition>().enabled = false; // Unico Moveto com update
+                GetComponent<Movable>().CanMove = true;
+                GetComponent<MoveToNearbyPosition>().Deactivate(); // Unico Moveto com update
 
                 GetComponent<Movable>().nextPosition = GetComponent<MoveToTarget>();
                 GetComponent<MoveToTarget>().target = mainBody.transform;
 
                 col.isTrigger = false;
                 rb.useGravity = true;
+                rb.isKinematic = false;
 
-                anim.SetBool("isGrounded", true);
+                // anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
                 break;
             case SlimeState.Following:
-                GetComponent<Movable>().enabled = true;
-                GetComponent<MoveToNearbyPosition>().enabled = false; // Unico Moveto com update
+                GetComponent<Movable>().CanMove = true;
+                GetComponent<MoveToNearbyPosition>().Deactivate(); // Unico Moveto com update
 
                 GetComponent<Movable>().nextPosition = GetComponent<MoveToTarget>();
                 GetComponent<MoveToTarget>().target = Shepherd.instance.transform;
 
                 col.isTrigger = false;
                 rb.useGravity = true;
+                rb.isKinematic = false;
 
-                anim.SetBool("isGrounded", true);
+                // anim.SetBool("isGrounded", true);
+                anim.SetBool("TopEnemy", false);
+                anim.SetBool("ChargingAttack", false);
+                break;
+            case SlimeState.Null:
+                GetComponent<Movable>().CanMove = false;
+                GetComponent<MoveToNearbyPosition>().Deactivate(); // Unico Moveto com update
+
+                GetComponent<Movable>().nextPosition = GetComponent<MoveToTarget>();
+                GetComponent<MoveToTarget>().target = mainBody.transform;
+
+                col.isTrigger = true;
+                rb.useGravity = false;
+                rb.isKinematic = false;
+
+                // anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
                 break;
         }
-        currentState = newState;
+        CurrentState = newState;
     }
 
     public void Grow(int count){
         if(isMainBody){
             GetComponent<Launcher>().Reload(count);
             if(size == 0){
-                GetComponent<SkinnedMeshRenderer>().enabled = true;
+                GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
             }
         }
         size += count;
@@ -153,11 +184,14 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     }
 
     public void Shrink(int count){
+        if(isMainBody)
+            GetComponent<Launcher>().Reload(-count);
         size = Mathf.Max(size - count, 0);
         rb.mass = size;
+
         if(size <= 0){
             if(isMainBody){
-                GetComponent<SkinnedMeshRenderer>().enabled = false;
+                GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
             }else{
                 GetComponent<Movable>().enabled = false;
                 col.enabled = false;
@@ -201,9 +235,9 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
 
     private void OnTriggerEnter(Collider other){
         // Colisao com os inimigos
-        if(currentState == SlimeState.Flying && other.gameObject.layer == LayerMask.NameToLayer("Enemy")){
+        if(CurrentState == SlimeState.Flying && other.gameObject.layer == LayerMask.NameToLayer("Enemy")){
             RaycastHit hit;
-            if(Physics.Raycast(transform.position, other.transform.position, out hit)){
+            if(Physics.Raycast(transform.position, other.transform.position - transform.position, out hit, 2 * Vector3.Distance(transform.position, other.transform.position), LayerMask.GetMask("Enemy"))){
                 rb.velocity = Vector3.zero;
                 transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal);
                 transform.position = hit.point;
@@ -215,36 +249,78 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
 
     void OnCollisionEnter(Collision other){
         // Colisao com a slime principal
-        if(currentState == SlimeState.Returning && other.gameObject.layer == LayerMask.NameToLayer("Slime")){
+        if(CurrentState == SlimeState.Returning && other.gameObject.layer == LayerMask.NameToLayer("Slime")){
             Slime otherSlime = other.gameObject.GetComponent<Slime>();
             if(otherSlime.isMainBody){
                 otherSlime.Grow(size);
-                size = 0; // Talvez mudar como isso acontece
+                // Talvez mudar como isso acontece (mas provavelmente n)
+                size = 0;
                 Die();
             }
         }
+
+        if(other.gameObject.layer == LayerMask.NameToLayer("Ground")){
+            anim.SetBool("isGrounded", true);
+            isGrounded = true;
+            jumpTimer = jumpCooldown;
+        }
+    }
+
+    void OnCollisionExit(Collision other){
+        if(other.gameObject.layer == LayerMask.NameToLayer("Ground")){
+            anim.SetBool("isGrounded", false);
+            isGrounded = false;
+        }
+    }
+
+    private void Jump(){
+        // Seta a velocidade necessária para atingir a altura de pulo desejada
+        rb.velocity = new Vector3(rb.velocity.x, Mathf.Sqrt(2 * jumpHeight * Physics.gravity.magnitude), rb.velocity.z);
     }
 
     public void Update(){
-        switch(currentState){
+        switch(CurrentState){
             case SlimeState.Idle:
+                // Checa se acabou o tempo de vida
                 if(timer <= 0){
                     Shrink(size);
                 }
 
+                // Faz o pulo se necessário
+                if(isGrounded && CanJump && ((Mathf.Abs(rb.velocity.x) > float.Epsilon) || (Mathf.Abs(rb.velocity.z) > float.Epsilon)) ){
+                    Jump();
+                }
+
+                jumpTimer -= Time.deltaTime;
                 timer -= Time.deltaTime;
                 break;
+            case SlimeState.Charging:
+                // Neutraliza movimentações causada pela fisica, como colisões
+                rb.velocity = Vector3.zero;
+                break;
             case SlimeState.Flying:
+                // Se tiver voado a distancia maxima (armazenada em timer) muda de estado
                 if(Vector3.Distance(transform.position, initialPosition) > timer){
-                    // SetState(SlimeState.Idle);
-                    SetState(SlimeState.Returning); // Placeholder no prototipo
+                    SetState(SlimeState.Idle);
                 }
                 break;
             case SlimeState.Attacking:
                 break;
             case SlimeState.Returning:
+                // Faz o pulo se necessário
+                if(isGrounded && CanJump && ((Mathf.Abs(rb.velocity.x) > float.Epsilon) || (Mathf.Abs(rb.velocity.z) > float.Epsilon)) ){
+                    Jump();
+                }
+
+                jumpTimer -= Time.deltaTime;
                 break;
             case SlimeState.Following:
+                // Faz o pulo se necessário
+                if(isGrounded && CanJump && ((Mathf.Abs(rb.velocity.x) > float.Epsilon) || (Mathf.Abs(rb.velocity.z) > float.Epsilon)) ){
+                    Jump();
+                }
+
+                jumpTimer -= Time.deltaTime;
                 break;
         }
 

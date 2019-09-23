@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
+    [SerializeField] private GameObject slimePrefab;
     [SerializeField] private int maxHP;
+    [SerializeField] private int mass = 1;
     [SerializeField] private float damageCheckPeriod;
     public int HP{ get; protected set; }
     private float timer;
@@ -37,8 +39,7 @@ public class Enemy : MonoBehaviour, IDamageable
                 foreach(Slime slime in attackers){
                     slime.transform.rotation = Quaternion.FromToRotation(slime.transform.up, Vector3.up);
                     slime.transform.SetParent(null, true);
-                    // slime.SetState(Slime.SlimeState.Idle);
-                    slime.SetState(Slime.SlimeState.Returning);
+                    slime.SetState(Slime.SlimeState.Idle);
                 }
                 Die();
             }
@@ -49,6 +50,13 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public virtual void Die(){ // Cada inimigo da override nisso aqui, spawna o que spawna na morte e chama base.Die()
         if(HP <= 0){
+            if(mass > 0){
+                GetComponent<Collider>().enabled = false;
+                Slime newSlime = Instantiate(slimePrefab, transform).GetComponent<Slime>();
+                newSlime.transform.SetParent(null, true);
+                newSlime.Grow(mass);
+                newSlime.SetState(Slime.SlimeState.Idle);
+            }
             Destroy(gameObject);
         }
     }

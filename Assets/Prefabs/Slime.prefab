@@ -69,9 +69,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   isMainBody: 0
-  lifeExpectancy: 10
+  lifeExpectancy: 30
   nAttacks: 5
-  size: 1
+  jumpCooldown: 0.4
+  jumpHeight: 0.35
+  size: 0
 --- !u!54 &7171600656108931300
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -101,6 +103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  turnRate: 0.1
+  minYSpeed: 0
   nextPosition: {fileID: 4019808673741236805}
 --- !u!114 &7606112941314726997
 MonoBehaviour:
@@ -130,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementCooldown: 5
-  walkingRange: 10
+  walkingRange: 5
 --- !u!95 &543820403181125542
 Animator:
   serializedVersion: 3

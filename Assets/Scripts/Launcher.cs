@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Launcher : MonoBehaviour
 {
-    [SerializeField] private float raycastDistance = 50.0f;
     [SerializeField] private GameObject Projectile;
     [SerializeField] private float projectileSpeed = 10.0f;
     [SerializeField] private float heightOffset = 0.3f;
@@ -12,15 +11,15 @@ public class Launcher : MonoBehaviour
     [SerializeField] private float chargeTime = 0.5f;
     [SerializeField] private int startingCharge = 5;
     private int chargeLevel = 0;
-    private int ChargeLevel{
-        get => chargeLevel;
-        set{
+    public int ChargeLevel{
+        get => Mathf.Clamp(chargeLevel, 0, ammo);
+        private set{
             chargeLevel = Mathf.Clamp(value, 0, ammo);
         }
     }
     public bool Charging { get; private set; }
     private float timer = 0f;
-    private int ammo = 0;
+    [SerializeField]private int ammo = 0;
     public int Ammo {
         get => ammo;
         private set{
@@ -52,18 +51,18 @@ public class Launcher : MonoBehaviour
 
         Charging = false;
         GetComponent<Slime>()?.SetState(Slime.SlimeState.Following);
-        transform.Find("Arrow").gameObject.SetActive(false);
-        ammo -= ChargeLevel;
-        GetComponent<Slime>()?.Shrink(chargeLevel);
+        transform.Find("Arrow")?.gameObject.SetActive(false);
         //shoot projectile on launchDirection
         GameObject proj = Instantiate(Projectile, new Vector3(transform.position.x, transform.position.y + heightOffset, transform.position.z), transform.rotation);
         (proj.GetComponent<IProjectile>())?.Launch(transform.forward, projectileSpeed, maxDistance);
-        (proj.GetComponent<Slime>())?.Grow(chargeLevel-1);
+        (proj.GetComponent<Slime>())?.Grow(ChargeLevel);
+        // A função de shrink já diminui a munição
+        //ammo -= ChargeLevel;
+        GetComponent<Slime>()?.Shrink(ChargeLevel);
     }
 
     public void Reload(int count){
-        if(count > 0)
-            Ammo += count;
+        Ammo += count;
     }
 
     void Awake(){
@@ -81,7 +80,7 @@ public class Launcher : MonoBehaviour
             }
 
             Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] objectsHit = Physics.RaycastAll(mouseRay, raycastDistance, LayerMask.GetMask("Ground"));
+            RaycastHit[] objectsHit = Physics.RaycastAll(mouseRay, CameraFollow.raycastDistance, LayerMask.GetMask("Ground"));
             Vector3 targetPosition;
             if(objectsHit.Length > 0){
                 targetPosition = objectsHit[0].point;
