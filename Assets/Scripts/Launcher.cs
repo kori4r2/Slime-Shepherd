@@ -9,7 +9,7 @@ public class Launcher : MonoBehaviour
     [SerializeField] private float heightOffset = 0.3f;
     [SerializeField] private float maxDistance = 50.0f;
     [SerializeField] private float chargeTime = 0.5f;
-    [SerializeField] private int startingCharge = 5;
+    [SerializeField] private int startingAmmo = 5;
     private int chargeLevel = 0;
     public int ChargeLevel{
         get => Mathf.Clamp(chargeLevel, 0, ammo);
@@ -66,7 +66,7 @@ public class Launcher : MonoBehaviour
     }
 
     void Awake(){
-        Ammo = startingCharge;
+        Ammo = startingAmmo;
         transform.Find("Arrow")?.gameObject.SetActive(false);
     }
 

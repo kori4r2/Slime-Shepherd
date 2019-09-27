@@ -18,6 +18,7 @@ public class Shepherd : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0)){
             launcher.ChargeShot();
+            GetComponent<Movable>().CanMove = false;
         }else if(Input.GetMouseButtonDown(1)){
             if(launcher.Charging)
                 launcher.CancelCharge();
@@ -38,6 +39,7 @@ public class Shepherd : MonoBehaviour
             }
         }else if(Input.GetMouseButtonUp(0)){
             launcher.Shoot();
+            GetComponent<Movable>().CanMove = true;
         }
     }
 }

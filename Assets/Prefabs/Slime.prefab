@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4019808673741236805}
   - component: {fileID: 543820403181125542}
   - component: {fileID: 6403289030373328640}
+  - component: {fileID: 195563541584356348}
   m_Layer: 11
   m_Name: Slime
   m_TagString: Untagged
@@ -65,14 +66,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f8429eebe9ea548bb0a8f70e624bfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 1024
   isMainBody: 0
   lifeExpectancy: 30
   nAttacks: 5
-  jumpCooldown: 0.4
-  jumpHeight: 0.35
+  growthCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.080976315
+      outSlope: 0.080976315
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.120960064
+    - serializedVersion: 3
+      time: 100
+      value: 5
+      inSlope: 0.0033116434
+      outSlope: 0.0033116434
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.4130039
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   size: 0
 --- !u!54 &7171600656108931300
 Rigidbody:
@@ -103,8 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  turnRate: 0.1
-  minYSpeed: 0
+  turnRate: 0.5
   nextPosition: {fileID: 4019808673741236805}
 --- !u!114 &7606112941314726997
 MonoBehaviour:
@@ -118,8 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538c85642d0c8b946801ea6e4d05b863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 0.5
-  minDistance: 0.5
+  maxDistance: 0
+  minDistance: 0
   target: {fileID: 0}
 --- !u!114 &4019808673741236805
 MonoBehaviour:
@@ -170,6 +189,28 @@ MonoBehaviour:
   rightEyeMaterialSlot: 2
   leftEyeMaterialSlot: 3
   eyesCount: 8
+--- !u!195 &195563541584356348
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6282328490080857786}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 954.9297
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7222996971979305024
 GameObject:
   m_ObjectHideFlags: 0
