@@ -7,6 +7,7 @@ public class Shepherd : MonoBehaviour
     public static Shepherd instance;
     [SerializeField] private Launcher launcher;
     [SerializeField] private float slimeCallRadius = 10f;
+    [SerializeField] private GameObject slimeCallParticles = null;
     // Start is called before the first frame update
     void Awake()
     {
@@ -29,6 +30,8 @@ public class Shepherd : MonoBehaviour
                 RaycastHit[] objectsHit = Physics.RaycastAll(mouseRay, CameraFollow.raycastDistance, LayerMask.GetMask("Ground"));
                 if(objectsHit.Length > 0){
                     Vector3 capsuleBottom = objectsHit[0].point;
+                    GameObject obj = Instantiate(slimeCallParticles, capsuleBottom, Quaternion.identity);
+                    obj.transform.localScale = new Vector3(slimeCallRadius, 1.0f, slimeCallRadius);
                     Vector3 capsuleTop = new Vector3(capsuleBottom.x, capsuleBottom.y + 1, capsuleBottom.z);
                     foreach(Collider col in Physics.OverlapCapsule(capsuleBottom, capsuleTop, slimeCallRadius, LayerMask.GetMask("Slime"))){
                         Slime slime = col.GetComponent<Slime>();

@@ -155,6 +155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launcher: {fileID: 0}
   slimeCallRadius: 5
+  slimeCallParticles: {fileID: 5755537439829496498, guid: a8f4f6716729b004298e7b2b35e4e9e8,
+    type: 3}
 --- !u!195 &2680115735645409140
 NavMeshAgent:
   m_ObjectHideFlags: 0
