@@ -27,15 +27,16 @@ public class Launcher : MonoBehaviour
         }
     }
 
-    public void ChargeShot(){
+    public bool ChargeShot(){
         if(ammo <= 0)
-            return;
+            return false;
 
         ChargeLevel = 1;
         timer = 0f;
         Charging = true;
         GetComponent<Slime>()?.SetState(Slime.SlimeState.Charging);
         transform.Find("Arrow").gameObject.SetActive(true);
+        return true;
     }
 
     public void CancelCharge(){

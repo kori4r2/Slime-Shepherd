@@ -15,12 +15,14 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
         Returning,
         Null
     }
+
     [SerializeField] private bool isMainBody = false;
     [SerializeField] private float lifeExpectancy = 10f;
     [SerializeField] private int nAttacks = 5;
     [SerializeField] private AnimationCurve growthCurve;
 
     public static Slime mainBody;
+    public static int Count { get; private set; }
     public SlimeState CurrentState { get; private set; }
     private Rigidbody rb;
     private Collider col;
@@ -39,6 +41,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     [SerializeField] private int size = 1;
 
     public void Awake(){
+        Count++;
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         anim = GetComponent<Animator>();
@@ -54,7 +57,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
 
     public void Start(){
         if(isMainBody){
-            Grow(GetComponent<Launcher>().Ammo);
+            Grow(GetComponent<Launcher>().Ammo, false);
             GetComponent<MoveToTarget>().target = Shepherd.instance.transform;
             SetState(SlimeState.Following);
         }
@@ -173,18 +176,22 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
         CurrentState = newState;
     }
 
-    public void Grow(int count){
+    public void Grow(int count, bool shouldReload = true){
         if(isMainBody){
-            GetComponent<Launcher>().Reload(count);
+            if(shouldReload){
+                GetComponent<Launcher>().Reload(count);
+            }
             if(size == 0){
+                Count++;
                 GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+                col.isTrigger = false;
             }
         }
         size += count;
         float scaleSize = growthCurve.Evaluate(size);
         if(isMainBody){
-                GetComponent<MoveToTarget>().minDistance += (scaleSize - transform.localScale.x);
-                GetComponent<MoveToTarget>().maxDistance += (scaleSize - transform.localScale.x);
+            GetComponent<MoveToTarget>().minDistance += (scaleSize - transform.localScale.x);
+            GetComponent<MoveToTarget>().maxDistance += (scaleSize - transform.localScale.x);
         }
         transform.localScale = new Vector3(scaleSize, scaleSize, scaleSize);
         rb.mass = size;
@@ -197,8 +204,10 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
         rb.mass = size;
 
         if(size <= 0){
+            Count--;
             if(isMainBody){
                 GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+                col.isTrigger = true;
             }else{
                 SetState(SlimeState.Null);
                 rb.velocity = Vector3.zero;
@@ -227,7 +236,9 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
             return; // Se o alvo do ataque morreu nem verifica quantos ataques tem sobrando
         
         attacksLeft--;
+        Debug.Log("Attacked");
         if(attacksLeft <= 0){
+        Debug.Log("No attacks left");
             Shrink(size);
         }
     }

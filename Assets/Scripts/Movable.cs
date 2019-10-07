@@ -9,8 +9,8 @@ public class Movable : MonoBehaviour {
 	public float MoveSpeed {
 		get=>moveSpeed;
 		set{
-			GetComponent<NavMeshAgent>().speed = moveSpeed;
 			moveSpeed = value;
+			GetComponent<NavMeshAgent>().speed = moveSpeed;
 		}
 	}
 	[SerializeField, Range(0.5f, 1f)] private float turnRate = 0.5f;

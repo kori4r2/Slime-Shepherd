@@ -17,12 +17,13 @@ public class Shepherd : MonoBehaviour
     void Update()
     {
         if(Input.GetMouseButtonDown(0)){
-            launcher.ChargeShot();
-            GetComponent<Movable>().CanMove = false;
+            if(launcher.ChargeShot()){
+                GetComponent<Movable>().CanMove = false;
+            }
         }else if(Input.GetMouseButtonDown(1)){
-            if(launcher.Charging)
+            if(launcher.Charging){
                 launcher.CancelCharge();
-            else{
+            }else{
                 // Raycast to the ground and callback slimes
                 Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit[] objectsHit = Physics.RaycastAll(mouseRay, CameraFollow.raycastDistance, LayerMask.GetMask("Ground"));

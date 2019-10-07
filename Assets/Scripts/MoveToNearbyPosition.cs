@@ -9,6 +9,7 @@ public class MoveToNearbyPosition : MoveTo
     [SerializeField] private float walkingRange = 10f;
     private float timer;
     private bool walking = false;
+    public bool Walking { get=>walking; }
     private Vector2 targetPosition = Vector2.zero;
 
     void Awake(){

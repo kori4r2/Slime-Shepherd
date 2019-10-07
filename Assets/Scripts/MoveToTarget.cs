@@ -36,6 +36,10 @@ public class MoveToTarget : MoveTo{
 
 	override public NavMeshPath Path{
 		get{
+			if(target == null){
+				return null;
+			}
+
 			// Calcula a distancia ate o alvo a ser seguido
 			Vector2 target2Dposition = new Vector2(target.position.x, target.position.z);
 			Vector2 current2Dposition = new Vector2(rigid.position.x, rigid.position.z);
