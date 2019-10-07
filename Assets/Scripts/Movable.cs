@@ -70,5 +70,16 @@ public class Movable : MonoBehaviour {
 			agent.velocity = Vector3.zero;
 			rigid.velocity = Vector3.zero;
 		}
+
+		if(anim != null)
+		{
+			if(nextPosition.GetType() == typeof(MoveToInput)){
+				anim.SetFloat("Speed", rigid.velocity.sqrMagnitude);
+			}
+			else
+			{
+				anim.SetFloat("Speed", agent.velocity.sqrMagnitude);
+			}
+		}
 	}
 }

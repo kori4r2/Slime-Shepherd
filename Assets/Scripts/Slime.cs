@@ -78,7 +78,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
 
                 timer = lifeExpectancy;
 
-                // anim.SetBool("isGrounded", true);
+                anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
                 break;
@@ -92,7 +92,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 rb.useGravity = true;
                 rb.isKinematic = false;
 
-                // anim.SetBool("isGrounded", true);
+                anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", true);
                 break;
@@ -106,7 +106,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 rb.isKinematic = false;
                 initialPosition = transform.position;
 
-                // anim.SetBool("isGrounded", false);
+                anim.SetBool("isGrounded", false);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
                 break;
@@ -121,7 +121,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
 
                 attacksLeft = nAttacks;
 
-                // anim.SetBool("isGrounded", false);
+                anim.SetBool("isGrounded", false);
                 anim.SetBool("TopEnemy", true);
                 anim.SetBool("ChargingAttack", false);
                 break;
@@ -137,7 +137,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 rb.useGravity = true;
                 rb.isKinematic = true;
 
-                // anim.SetBool("isGrounded", true);
+                anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
                 break;
@@ -153,7 +153,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 rb.useGravity = true;
                 rb.isKinematic = true;
 
-                // anim.SetBool("isGrounded", true);
+                anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
                 break;
@@ -168,7 +168,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 rb.useGravity = false;
                 rb.isKinematic = false;
 
-                // anim.SetBool("isGrounded", true);
+                anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
                 break;
@@ -282,17 +282,17 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
             }
         }
 
-        if(other.gameObject.layer == LayerMask.NameToLayer("Ground")){
-            anim.SetBool("isGrounded", true);
-            isGrounded = true;
-        }
+        // if(other.gameObject.layer == LayerMask.NameToLayer("Ground")){
+        //     anim.SetBool("isGrounded", true);
+        //     isGrounded = true;
+        // }
     }
 
     void OnCollisionExit(Collision other){
-        if(other.gameObject.layer == LayerMask.NameToLayer("Ground")){
-            anim.SetBool("isGrounded", false);
-            isGrounded = false;
-        }
+        // if(other.gameObject.layer == LayerMask.NameToLayer("Ground")){
+        //     anim.SetBool("isGrounded", false);
+        //     isGrounded = false;
+        // }
     }
 
     public void Update(){
@@ -329,7 +329,5 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
             case SlimeState.Following:
                 break;
         }
-
-        anim.SetFloat("VerticalSpeed", rb.velocity.y);
     }
 }
