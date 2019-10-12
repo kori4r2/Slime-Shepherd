@@ -14,6 +14,7 @@ public class Movable : MonoBehaviour {
 		}
 	}
 	[SerializeField, Range(0.5f, 1f)] private float turnRate = 0.5f;
+	public float TurnRate { get=>turnRate; }
 	public MoveTo nextPosition;
 	private bool canMove = true;
 	public bool CanMove{
@@ -55,6 +56,9 @@ public class Movable : MonoBehaviour {
 				rigid.isKinematic = false;
 				Vector2 direction2D = nextPosition.Direction;
 				rigid.velocity = new Vector3(direction2D.x * moveSpeed, rigid.velocity.y, direction2D.y * moveSpeed);
+				if(direction2D != Vector2.zero){
+					transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rigid.velocity.normalized), turnRate);
+				}
 			}else if(agent.enabled){
 				rigid.isKinematic = true;
 				NavMeshPath newPath = nextPosition.Path;
@@ -71,14 +75,14 @@ public class Movable : MonoBehaviour {
 			rigid.velocity = Vector3.zero;
 		}
 
-		if(anim != null)
-		{
-			if(nextPosition.GetType() == typeof(MoveToInput)){
-				anim.SetFloat("Speed", rigid.velocity.sqrMagnitude);
-			}
-			else
-			{
-				anim.SetFloat("Speed", agent.velocity.sqrMagnitude);
+		if(anim != null){
+			List<AnimatorControllerParameter> parameters = new List<AnimatorControllerParameter>(anim.parameters);
+			if(parameters.Find(param => (param.name == "Speed" && param.type == AnimatorControllerParameterType.Float)) != null){
+				if(nextPosition.GetType() == typeof(MoveToInput)){
+					anim.SetFloat("Speed", rigid.velocity.sqrMagnitude);
+				}else{
+					anim.SetFloat("Speed", agent.velocity.sqrMagnitude);
+				}
 			}
 		}
 	}

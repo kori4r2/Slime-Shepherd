@@ -213,7 +213,6 @@ public class Enemy : MonoBehaviour, IDamageable
             foreach(Slime slime in attackers){
                 weight += slime.HP;
             }
-            Debug.Log("calculated weight = " + weight);
             moveSpeedSlow = slowCurve.Evaluate(weight);
             GetComponent<Movable>().MoveSpeed /= (1 - previousSlow);
             GetComponent<Movable>().MoveSpeed *= (1 - moveSpeedSlow);
