@@ -26,7 +26,7 @@ public class Shepherd : MonoBehaviour
     void Update()
     {
         if(Input.GetMouseButtonDown(0)){
-            if(launcher.ChargeShot()){
+            if(movable.CanMove && launcher.ChargeShot()){
                 animator.SetTrigger("Aim");
                 movable.CanMove = false;
             }
@@ -56,8 +56,10 @@ public class Shepherd : MonoBehaviour
                 }
             }
         }else if(Input.GetMouseButtonUp(0)){
-            animator.SetTrigger("AimConfirm");
-            launcher.Shoot();
+            if(launcher.Charging){
+                animator.SetTrigger("AimConfirm");
+                launcher.Shoot();
+            }
         }
 
         if(launcher.Charging){

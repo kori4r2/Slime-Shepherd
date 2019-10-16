@@ -23,6 +23,17 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
 
     public static Slime mainBody;
     public static int Count { get; private set; }
+    private static int herdSize;
+    public static int HerdSize {
+        get => herdSize;
+        private set{
+            Debug.Log("New herdsize = " + value);
+            herdSize = value;
+            if(herdSize <= 0){
+                GameManager.instance.GameOver();
+            }
+        }
+    }
     public SlimeState CurrentState { get; private set; }
     private Rigidbody rb;
     private Collider col;
@@ -30,7 +41,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     private Vector3 initialPosition;
     private float timer;
     private int attacksLeft;
-    private bool isGrounded;
+    private bool isHerd;
     public int HP {
         get => size;
         private set{
@@ -60,6 +71,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
             Grow(GetComponent<Launcher>().Ammo, false);
             GetComponent<MoveToTarget>().target = Shepherd.instance.transform;
             SetState(SlimeState.Following);
+            HerdSize = size;
         }
     }
 
@@ -95,6 +107,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", true);
+
                 break;
             case SlimeState.Flying:
                 GetComponent<NavMeshAgent>().enabled = false;
@@ -109,6 +122,8 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 anim.SetBool("isGrounded", false);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
+
+                isHerd = true;
                 break;
             case SlimeState.Attacking:
                 GetComponent<NavMeshAgent>().enabled = false;
@@ -140,6 +155,11 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
+
+                if(!isHerd){
+                    HerdSize += size;
+                }
+                isHerd = true;
                 break;
             case SlimeState.Following:
                 GetComponent<NavMeshAgent>().enabled = true;
@@ -156,6 +176,8 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
+
+                isHerd = true;
                 break;
             case SlimeState.Null:
                 GetComponent<NavMeshAgent>().enabled = false;
@@ -171,6 +193,8 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
+
+                isHerd = false;
                 break;
         }
         CurrentState = newState;
@@ -198,8 +222,9 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     }
 
     public void Shrink(int count){
-        if(isMainBody)
+        if(isMainBody){
             GetComponent<Launcher>().Reload(-count);
+        }
         size = Mathf.Max(size - count, 0);
         rb.mass = size;
 
@@ -239,12 +264,15 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
         Debug.Log("Attacked");
         if(attacksLeft <= 0){
         Debug.Log("No attacks left");
-            Shrink(size);
+            TakeDamage(size);
         }
     }
 
     public bool TakeDamage(int dmg){
         Shrink(dmg);
+        if(isHerd){
+            HerdSize -= Mathf.Min(dmg, size);
+        }
         anim.SetTrigger("Hit");
         return (HP <= 0);
     }
@@ -252,6 +280,9 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     // Função pra ser chamada no animator
     public void Die(){
         if(size <= 0){
+            if(isHerd){
+
+            }
             Destroy(gameObject);
         }
     }
@@ -270,37 +301,25 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
         }
     }
 
-    void OnCollisionEnter(Collision other){
-        // Colisao com a slime principal
-        if(CurrentState == SlimeState.Returning && other.gameObject.layer == LayerMask.NameToLayer("Slime")){
-            Slime otherSlime = other.gameObject.GetComponent<Slime>();
-            if(otherSlime.isMainBody){
-                otherSlime.Grow(size);
-                // Talvez mudar como isso acontece (mas provavelmente n)
-                size = 0;
-                Die();
-            }
-        }
-
-        // if(other.gameObject.layer == LayerMask.NameToLayer("Ground")){
-        //     anim.SetBool("isGrounded", true);
-        //     isGrounded = true;
-        // }
-    }
-
-    void OnCollisionExit(Collision other){
-        // if(other.gameObject.layer == LayerMask.NameToLayer("Ground")){
-        //     anim.SetBool("isGrounded", false);
-        //     isGrounded = false;
-        // }
-    }
+    // void OnCollisionEnter(Collision other){
+    //     // Colisao com a slime principal
+    //     if(CurrentState == SlimeState.Returning && other.gameObject.layer == LayerMask.NameToLayer("Slime")){
+    //         Slime otherSlime = other.gameObject.GetComponent<Slime>();
+    //         if(otherSlime.isMainBody){
+    //             otherSlime.Grow(size);
+    //             // Talvez mudar como isso acontece (mas provavelmente n)
+    //             size = 0;
+    //             Die();
+    //         }
+    //     }
+    // }
 
     public void Update(){
         switch(CurrentState){
             case SlimeState.Idle:
                 // Checa se acabou o tempo de vida
                 if(timer <= 0){
-                    Shrink(size);
+                    TakeDamage(size);
                 }
                 timer -= Time.deltaTime;
                 break;
