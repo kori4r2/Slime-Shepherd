@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text gameModeName;
     [SerializeField] private Text timerText;
     [SerializeField] private Text scoreText;
+    [SerializeField] private Text finalScoreText;
+    [SerializeField] private GameObject gameOverUI;
     private float timer;
     private static bool gameStarted = false;
     public static GameModes GameMode{
@@ -66,6 +68,12 @@ public class GameManager : MonoBehaviour
         gameStarted = true;
     }
 
+    public static string GetTimeString(float timer){
+        System.TimeSpan timeSpan = new System.TimeSpan(0, 0, (int)timer);
+        string format = (timeSpan.TotalHours >= 1? "h\\:" : "") + (timeSpan.TotalMinutes >= 1? "mm\\:" : "") + "ss";
+        return string.Format("{0:" + format + "}", timeSpan);
+    }
+
     private void CheckGameEnd(){
         switch(gameMode){
             case GameModes.HighScore:
@@ -83,24 +91,41 @@ public class GameManager : MonoBehaviour
 
     // Função de game over para quando o jogador perder
     public void GameOver(){
-        gameStarted = false;
-        Time.timeScale = 0f;
-        // TO DO: Spawna as UI na tela
+        Shepherd.instance.Lost();
+        switch(gameMode){
+            case GameModes.TimeAttack:
+                GameOver(timer, true);
+                break;
+            default:
+                GameOver((int)0, true);
+                break;
+        }
     }
 
     // Função de game over para quando acaba o time attack
-    private void GameOver(float time){
+    private void GameOver(float time, bool lost = false){
         gameStarted = false;
-        Time.timeScale = 0f;
-        System.TimeSpan timeScore = new System.TimeSpan(0, 0, (int)time);
-        // TO DO: Spawna as UI na tela
+        Shepherd.instance.Stop();
+        foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
+            enemy.Stop();
+        }
+        finalScoreText.text = GetTimeString(time);
+        gameOverUI.SetActive(true);
     }
 
     // Função de game over para quando acaba o tempo do high score challenge
-    private void GameOver(int slimeCount){
+    private void GameOver(int slimeCount, bool lost = false){
         gameStarted = false;
-        Time.timeScale = 0f;
-        // TO DO: Spawna as UI na tela
+        Shepherd.instance.Stop();
+        foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
+            enemy.Stop();
+        }
+        finalScoreText.text = slimeCount + " slimes";
+        gameOverUI.SetActive(true);
+    }
+
+    public void GoToMainMenu(){
+        // TO DO: Muda de cena pro menu principal
     }
 
     public void Pause(){
@@ -121,8 +146,7 @@ public class GameManager : MonoBehaviour
             if(timeSpan.Days > 0){
                 timerText.text = "STOP!";
             }else{
-                string format = (timeSpan.TotalHours >= 1? "h\\:" : "") + (timeSpan.TotalMinutes >= 1? "mm\\:" : "") + "ss";
-                timerText.text = string.Format("{0:" + format + "}", timeSpan);
+                timerText.text = GetTimeString(timer);
             }
             scoreText.text = Slime.HerdSize + ((GameMode == GameModes.TimeAttack)? ("/" + targetScore) : "");
             //CheckGameEnd();

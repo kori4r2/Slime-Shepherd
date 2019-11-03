@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] protected int damage;
     [SerializeField] protected float detectionRange;  
     private float moveSpeedSlow = 0f;  
+    protected bool blind = false;
     [SerializeField] private AnimationCurve slowCurve;
     protected GameObject SlimePrefab { get=>slimePrefab; }
     public int HP { get; protected set; }
@@ -92,6 +93,12 @@ public class Enemy : MonoBehaviour, IDamageable
     }
 #endif
 
+    public void Stop(){
+        blind = true;
+        damage = 0;
+        SetState(EnemyState.Idle);
+    }
+
     protected void SetState(EnemyState newState){
         switch(newState){
             case EnemyState.Attacking:
@@ -147,6 +154,9 @@ public class Enemy : MonoBehaviour, IDamageable
 
     // Essa função checa se tem alguma slime no alcance de detecção e reage de maneira apropriada
     protected virtual void LookAround(){
+        if(blind)
+            return;
+            
         if(Physics.CheckCapsule(transform.position, new Vector3(transform.position.x, 0, transform.position.z), detectionRange, LayerMask.GetMask("Slime"))){
             Target = Slime.mainBody.transform;
             // SetState(EnemyState.Attacking);

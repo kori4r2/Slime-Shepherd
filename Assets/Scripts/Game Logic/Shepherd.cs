@@ -22,6 +22,22 @@ public class Shepherd : MonoBehaviour
         movable.CanMove = true;
     }
 
+    public void Lost(){
+        if(launcher.Charging){
+            launcher.CancelCharge();
+        }
+        animator.SetTrigger("Lost");
+        movable.CanMove = false;
+    }
+
+    public void Stop(){
+        if(launcher.Charging){
+            animator.SetTrigger("AimCancel");
+            launcher.CancelCharge();
+        }
+        movable.CanMove = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
