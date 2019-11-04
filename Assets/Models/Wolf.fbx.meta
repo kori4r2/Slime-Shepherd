@@ -1,0 +1,196 @@
+fileFormatVersion: 2
+guid: 41ae41b4a15274a4ba3ec5986a0ddf32
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Armature
+    100002: BackFootControl_L
+    100004: BackFootControl_R
+    100006: BackLowerLeg_L
+    100008: BackLowerLeg_R
+    100010: BackMiddleLeg_L
+    100012: BackMiddleLeg_R
+    100014: BackPaw_L
+    100016: BackPaw_R
+    100018: BackUpperLeg_L
+    100020: BackUpperLeg_R
+    100022: FrontLowerLeg_L
+    100024: FrontLowerLeg_R
+    100026: FrontPaw_L
+    100028: FrontPaw_R
+    100030: FrontUpperLeg_L
+    100032: FrontUpperLeg_R
+    100034: Head
+    100036: IK_BackLowerLeg_L
+    100038: IK_BackLowerLeg_R
+    100040: IK_BackMiddleLeg_L
+    100042: IK_BackMiddleLeg_R
+    100044: IK_FrontLeg_L
+    100046: IK_FrontLeg_R
+    100048: Jaw
+    100050: LowerEar_L
+    100052: LowerEar_R
+    100054: Neck
+    100056: Orientation
+    100058: Pole_BackLowerLeg_L
+    100060: Pole_BackLowerLeg_R
+    100062: Pole_BackMiddleLeg_L
+    100064: Pole_BackMiddleLeg_R
+    100066: Pole_FrontLeg_L
+    100068: Pole_FrontLeg_R
+    100070: Root
+    100072: Spine1
+    100074: Spine2
+    100076: Spine3
+    100078: Tail1
+    100080: Tail2
+    100082: Tail3
+    100084: UpperEar_L
+    100086: UpperEar_R
+    100088: //RootNode
+    100090: Wolf
+    400000: Armature
+    400002: BackFootControl_L
+    400004: BackFootControl_R
+    400006: BackLowerLeg_L
+    400008: BackLowerLeg_R
+    400010: BackMiddleLeg_L
+    400012: BackMiddleLeg_R
+    400014: BackPaw_L
+    400016: BackPaw_R
+    400018: BackUpperLeg_L
+    400020: BackUpperLeg_R
+    400022: FrontLowerLeg_L
+    400024: FrontLowerLeg_R
+    400026: FrontPaw_L
+    400028: FrontPaw_R
+    400030: FrontUpperLeg_L
+    400032: FrontUpperLeg_R
+    400034: Head
+    400036: IK_BackLowerLeg_L
+    400038: IK_BackLowerLeg_R
+    400040: IK_BackMiddleLeg_L
+    400042: IK_BackMiddleLeg_R
+    400044: IK_FrontLeg_L
+    400046: IK_FrontLeg_R
+    400048: Jaw
+    400050: LowerEar_L
+    400052: LowerEar_R
+    400054: Neck
+    400056: Orientation
+    400058: Pole_BackLowerLeg_L
+    400060: Pole_BackLowerLeg_R
+    400062: Pole_BackMiddleLeg_L
+    400064: Pole_BackMiddleLeg_R
+    400066: Pole_FrontLeg_L
+    400068: Pole_FrontLeg_R
+    400070: Root
+    400072: Spine1
+    400074: Spine2
+    400076: Spine3
+    400078: Tail1
+    400080: Tail2
+    400082: Tail3
+    400084: UpperEar_L
+    400086: UpperEar_R
+    400088: //RootNode
+    400090: Wolf
+    2100000: Material
+    2100002: InsideMouth
+    2100004: Eyes
+    2100006: Nose
+    4300000: Wolf
+    7400000: Default Take
+    7400002: Attack
+    7400004: Die
+    7400006: Idle
+    7400008: PoseLib
+    7400010: Walk
+    9500000: //RootNode
+    13700000: Wolf
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 100
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
