@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538c85642d0c8b946801ea6e4d05b863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 2
+  maxDistance: 1.5
   minDistance: 1.5
   target: {fileID: 0}
 --- !u!95 &6679351218322188857
@@ -189,13 +189,40 @@ MonoBehaviour:
   mass: 1
   damageCheckCooldown: 0.5
   lookAroundCooldown: 1.5
-  attackPoint: {fileID: 0}
+  attackPoint: {fileID: 3362902955382116902}
   attackRadius: 0
   damage: 0
   detectionRange: 10
   slowCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.10798413
+      outSlope: 0.10798413
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.86283183
+    - serializedVersion: 3
+      time: 1
+      value: 0.4
+      inSlope: 0.06915095
+      outSlope: 0.06915095
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.08928572
+    - serializedVersion: 3
+      time: 15
+      value: 0.8
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -641,9 +668,9 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d1a61593e48a2a141b4eca6178e9344b, type: 3}
-  - {fileID: 2100002, guid: d1a61593e48a2a141b4eca6178e9344b, type: 3}
-  - {fileID: 2100004, guid: d1a61593e48a2a141b4eca6178e9344b, type: 3}
+  - {fileID: 2100000, guid: c8b092a666926044b8d011f528da29ba, type: 2}
+  - {fileID: 2100000, guid: 9cba598098a0bb845be8382379267009, type: 2}
+  - {fileID: 2100000, guid: 1cac5cd98b2f4524eabe5cad3fd33905, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

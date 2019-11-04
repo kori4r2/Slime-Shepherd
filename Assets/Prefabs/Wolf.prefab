@@ -237,16 +237,16 @@ MonoBehaviour:
       outWeight: 0.86283183
     - serializedVersion: 3
       time: 1
-      value: 0.2
-      inSlope: 0.10641975
-      outSlope: 0.10641975
+      value: 0.4
+      inSlope: 0.06915095
+      outSlope: 0.06915095
       tangentMode: 0
       weightedMode: 0
       inWeight: 1
-      outWeight: 0.33333334
+      outWeight: 0.08928572
     - serializedVersion: 3
       time: 15
-      value: 0.75
+      value: 0.8
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -796,10 +796,10 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 41ae41b4a15274a4ba3ec5986a0ddf32, type: 3}
-  - {fileID: 2100002, guid: 41ae41b4a15274a4ba3ec5986a0ddf32, type: 3}
-  - {fileID: 2100004, guid: 41ae41b4a15274a4ba3ec5986a0ddf32, type: 3}
-  - {fileID: 2100006, guid: 41ae41b4a15274a4ba3ec5986a0ddf32, type: 3}
+  - {fileID: 2100000, guid: b7042192b9fcd2e418dd81bede7c77a2, type: 2}
+  - {fileID: 2100000, guid: 2c3ce32197518544ca46a03264f5e6f5, type: 2}
+  - {fileID: 2100000, guid: 6da00d67a45adfe4f9739b9eff5fffa4, type: 2}
+  - {fileID: 2100000, guid: 91f43564cd0416745ac699debf389487, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
