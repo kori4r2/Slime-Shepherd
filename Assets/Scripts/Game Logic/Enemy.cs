@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour, IDamageable
     }
 
     [SerializeField] private GameObject slimePrefab;
+    public Transform centerPosition;
     [SerializeField] protected int maxHP;
     [SerializeField] protected int mass = 1;
     [SerializeField] protected float damageCheckCooldown;
