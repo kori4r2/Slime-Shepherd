@@ -194,7 +194,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void Update(){
         // Checa o dano causado pelas slimes grudadas
-        if(timer > damageCheckCooldown){
+        if(timer > damageCheckCooldown && HP > 0){
             timer -= damageCheckCooldown;
 
             foreach(Slime slime in attackers.ToArray()){
@@ -215,7 +215,7 @@ public class Enemy : MonoBehaviour, IDamageable
                     slime.transform.SetParent(null, true);
                     slime.SetState(Slime.SlimeState.Idle);
                 }
-                Die();
+                animator.SetTrigger("Die");
             }
 
             float previousSlow = moveSpeedSlow;

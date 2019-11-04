@@ -184,7 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea650fb219452e468e837afb75d9633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slimePrefab: {fileID: 0}
+  slimePrefab: {fileID: 6282328490080857786, guid: 763619dd5f235654f91f58213e3f43c8,
+    type: 3}
   maxHP: 10
   mass: 1
   damageCheckCooldown: 0.5
