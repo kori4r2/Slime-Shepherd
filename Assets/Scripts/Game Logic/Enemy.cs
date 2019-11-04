@@ -19,16 +19,16 @@ public class Enemy : MonoBehaviour, IDamageable
     }
 
     [SerializeField] private GameObject slimePrefab;
-    [SerializeField] protected int maxHP;
+    [SerializeField] protected int maxHP = 10;
     [SerializeField] protected int mass = 1;
-    [SerializeField] protected float damageCheckCooldown;
-    [SerializeField] protected float lookAroundCooldown;
+    [SerializeField] protected float damageCheckCooldown = 0.5f;
+    [SerializeField] protected float lookAroundCooldown = 1.5f;
     [SerializeField] protected Transform attackPoint;
     private float attackRange;
-    [SerializeField] protected float attackRadius;
-    [SerializeField] protected int damage;
-    [SerializeField] protected float detectionRange;  
-    private float moveSpeedSlow = 0f;  
+    [SerializeField] protected float attackRadius = 0.5f;
+    [SerializeField] protected int damage = 1;
+    [SerializeField] protected float detectionRange = 10;
+    private float moveSpeedSlow = 0f;
     protected bool blind = false;
     [SerializeField] private AnimationCurve slowCurve;
     protected GameObject SlimePrefab { get=>slimePrefab; }
