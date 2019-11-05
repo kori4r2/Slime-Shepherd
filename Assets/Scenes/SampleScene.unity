@@ -324,6 +324,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43c40b74e5038b4449f485444d8b4e6b, type: 3}
+--- !u!4 &448239583 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6007907673879552536, guid: 82846a3a8c1f2aa48be48a821b7f7821,
+    type: 3}
+  m_PrefabInstance: {fileID: 547903339}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &514425555
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -478,7 +484,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
   m_LocalRotation: {x: 0.52249855, y: 0, z: 0, w: 0.85264015}
-  m_LocalPosition: {x: 0, y: 5.9697433, z: -3.0417364}
+  m_LocalPosition: {x: 0, y: 10.692078, z: -5.4478865}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -497,7 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1491414794}
-  distanceToTarget: 6.7
+  distanceToTarget: 12
   viewingAngle: 63
   ground: {fileID: 0}
 --- !u!114 &534669907
@@ -758,6 +764,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StoppingDistance
       value: 1.0872439
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865411881826385922, guid: 82846a3a8c1f2aa48be48a821b7f7821,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82846a3a8c1f2aa48be48a821b7f7821, type: 3}
@@ -1306,6 +1317,41 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43c40b74e5038b4449f485444d8b4e6b, type: 3}
+--- !u!1 &1282500795 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5837177158069516467, guid: 82846a3a8c1f2aa48be48a821b7f7821,
+    type: 3}
+  m_PrefabInstance: {fileID: 547903339}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1282500806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282500795}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6357f1e143e07a04e9ea4d264ecbe993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slimePrefab: {fileID: 6282328490080857786, guid: 763619dd5f235654f91f58213e3f43c8,
+    type: 3}
+  centerPosition: {fileID: 0}
+  maxHP: 10
+  mass: 5
+  damageCheckCooldown: 0.5
+  lookAroundCooldown: 3
+  attackPoint: {fileID: 448239583}
+  attackRadius: 0.5
+  damage: 1
+  detectionRange: 10
+  slowCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1421313107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2143,6 +2189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slimePrefab: {fileID: 6282328490080857786, guid: 763619dd5f235654f91f58213e3f43c8,
     type: 3}
+  centerPosition: {fileID: 0}
   maxHP: 5
   mass: 1
   damageCheckCooldown: 0.5
