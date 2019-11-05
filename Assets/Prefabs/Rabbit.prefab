@@ -88,6 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementCooldown: 5
   walkingRange: 10
+  minMoveRangeRelative: 0.3
 --- !u!114 &8026518436916082106
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float radius;
     [SerializeField] private GameObject enemyPrefab;
     private List<Enemy> enemiesAlive = new List<Enemy>();
+    private float minPlayerDistance = 5;
 
 #if UNITY_EDITOR
     [DrawGizmo(GizmoType.InSelectionHierarchy | GizmoType.NotInSelectionHierarchy)]
@@ -25,7 +26,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy(){
         Vector2 circlePos = Random.insideUnitCircle * radius;
-        Vector3 position = new Vector3(circlePos.x, transform.position.y, circlePos.y);
+        Vector3 position = transform.position + new Vector3(circlePos.x, 0, circlePos.y);
         NavMeshHit hit;
         while(!NavMesh.SamplePosition(position, out hit, 2, NavMesh.AllAreas)){
             circlePos = Random.insideUnitCircle * radius;
@@ -54,7 +55,8 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        if(enemiesAlive.Count < nEnemies){
+        Vector3 posDif = transform.position - Shepherd.instance.transform.position;
+        if(posDif.magnitude >= (minPlayerDistance + radius) && enemiesAlive.Count < nEnemies){
             SpawnEnemy();
         }
     }
