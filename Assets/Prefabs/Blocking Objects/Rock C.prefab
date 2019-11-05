@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 933234057899065509}
   - component: {fileID: 933234057899065506}
   - component: {fileID: 933234057899065507}
-  - component: {fileID: 1201757500779005795}
+  - component: {fileID: 2699519751080410153}
   m_Layer: 0
   m_Name: Rock C
   m_TagString: Untagged
@@ -95,8 +95,8 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.034, y: -0.014, z: -0.11800001}
   m_TimeToStationary: 0.5
---- !u!65 &1201757500779005795
-BoxCollider:
+--- !u!64 &2699519751080410153
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,6 +105,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.0224223, y: 1.6239221, z: 2.738186}
-  m_Center: {x: 0.034115314, y: -0.013772577, z: -0.11796063}
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 455995b8866658b42b3da7b1cab18535, type: 3}
