@@ -314,7 +314,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
         switch(CurrentState){
             case SlimeState.Idle:
                 // Checa se acabou o tempo de vida
-                if(timer <= 0){
+                if(timer <= 0 && lifeExpectancy > 0){
                     TakeDamage(size);
                 }
                 timer -= Time.deltaTime;

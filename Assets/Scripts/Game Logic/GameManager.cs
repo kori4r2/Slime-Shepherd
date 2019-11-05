@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum GameModes{
     HighScore,
@@ -126,6 +127,7 @@ public class GameManager : MonoBehaviour
 
     public void GoToMainMenu(){
         // TO DO: Muda de cena pro menu principal
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void Pause(){
