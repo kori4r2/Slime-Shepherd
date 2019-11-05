@@ -31,7 +31,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     public static int HerdSize {
         get => herdSize;
         private set{
-            Debug.Log("New herdsize = " + value);
+            // Debug.Log("New herdsize = " + value);
             herdSize = value;
             if(herdSize <= 0){
                 GameManager.instance.GameOver();
@@ -264,9 +264,9 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
             return; // Se o alvo do ataque morreu nem verifica quantos ataques tem sobrando
         
         attacksLeft--;
-        Debug.Log("Attacked");
+        // Debug.Log("Attacked");
         if(attacksLeft <= 0){
-        Debug.Log("No attacks left");
+        // Debug.Log("No attacks left");
             TakeDamage(size);
         }
     }
@@ -289,7 +289,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     }
 
     private void OnTriggerEnter(Collider other){
-        Debug.Log("Trigger with " + other.gameObject.name);
+        // Debug.Log("Trigger with " + other.gameObject.name);
         // Colisao com os inimigos
         if(CurrentState == SlimeState.Flying && other.gameObject.layer == LayerMask.NameToLayer("Enemy")){
             RaycastHit hit;

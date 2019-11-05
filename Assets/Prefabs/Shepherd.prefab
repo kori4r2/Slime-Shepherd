@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 9113889609098452179}
   - component: {fileID: 4412187970842077279}
   - component: {fileID: 6094654015791825275}
+  - component: {fileID: 1283918256323187492}
   m_Layer: 0
   m_Name: Shepherd
   m_TagString: Untagged
@@ -67,10 +68,10 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &2680115735645409141
 MonoBehaviour:
@@ -115,6 +116,7 @@ MonoBehaviour:
   slimeCallRadius: 5
   slimeCallParticles: {fileID: 5755537439829496498, guid: a8f4f6716729b004298e7b2b35e4e9e8,
     type: 3}
+  activeObjectsRadius: 60
 --- !u!195 &2680115735645409140
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -281,6 +283,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips: []
+--- !u!135 &1283918256323187492
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2680115735645409148}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 60
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3005895758813752943
 GameObject:
   m_ObjectHideFlags: 0

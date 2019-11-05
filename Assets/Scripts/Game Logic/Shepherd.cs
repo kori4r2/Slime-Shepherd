@@ -8,8 +8,18 @@ public class Shepherd : MonoBehaviour
     [SerializeField] private Launcher launcher;
     [SerializeField] private float slimeCallRadius = 10f;
     [SerializeField] private GameObject slimeCallParticles = null;
+    [SerializeField] private float activeObjectsRadius = 200f;
     private Animator animator;
     private Movable movable;
+
+    void OnValidate(){
+        foreach(SphereCollider col in GetComponents<SphereCollider>()){
+            if(col.isTrigger){
+                col.radius = activeObjectsRadius;
+            }
+        }
+    }
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -36,6 +46,37 @@ public class Shepherd : MonoBehaviour
             launcher.CancelCharge();
         }
         movable.CanMove = false;
+    }
+
+    private void OnTriggerEnter(Collider other){
+        Enemy enemy = other.GetComponent<Enemy>();
+        EnemySpawner spawner = other.GetComponent<EnemySpawner>();
+
+        // if(enemy != null){
+            // enemy.GetComponent<Movable>().CanMove = true;
+            // enemy.Resume();
+            // enemy.gameObject.SetActive(true);
+        // }
+        if(spawner != null){
+            Debug.Log("Activating spawner " + other.gameObject.name);
+            spawner.active = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other){
+        Enemy enemy = other.GetComponent<Enemy>();
+        EnemySpawner spawner = other.GetComponent<EnemySpawner>();
+
+        if(enemy != null){
+            // enemy.GetComponent<Movable>().CanMove = false;
+            // enemy.Stop();
+            enemy.Die(true);
+            // enemy.gameObject.SetActive(false);
+        }
+        if(spawner != null){
+            Debug.Log("Stopping spawner " + other.gameObject.name);
+            spawner.active = false;
+        }
     }
 
     // Update is called once per frame

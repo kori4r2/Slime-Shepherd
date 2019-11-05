@@ -14,8 +14,10 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int nEnemies;
     [SerializeField] private float radius;
     [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private float spawnDistance = 10;
+    [SerializeField] private float minPlayerDistance = 5;
     private List<Enemy> enemiesAlive = new List<Enemy>();
-    private float minPlayerDistance = 5;
+    public bool active;
 
 #if UNITY_EDITOR
     [DrawGizmo(GizmoType.InSelectionHierarchy | GizmoType.NotInSelectionHierarchy)]
@@ -45,18 +47,30 @@ public class EnemySpawner : MonoBehaviour
             enemiesAlive.Remove(enemy);
         }
     }
-    
+
+    public void Activate(){
+        active = true;
+        foreach(Enemy enemy in enemiesAlive){
+            enemy.gameObject.SetActive(true);
+        }
+    }
+
+    public void Deactivate(){
+    }
+
     void Start()
     {
-        for(int i = 0; i < nEnemies; i++){
-            SpawnEnemy();
+        active = Vector3.Distance(transform.position, Shepherd.instance.transform.position) < (spawnDistance + radius);
+        if(active){
+            for(int i = 0; i < nEnemies; i++){
+                SpawnEnemy();
+            }
         }
     }
 
     void Update()
     {
-        Vector3 posDif = transform.position - Shepherd.instance.transform.position;
-        if(posDif.magnitude >= (minPlayerDistance + radius) && enemiesAlive.Count < nEnemies){
+        if(active && Vector3.Distance(transform.position, Shepherd.instance.transform.position) >= (minPlayerDistance + radius) && enemiesAlive.Count < nEnemies){
             SpawnEnemy();
         }
     }

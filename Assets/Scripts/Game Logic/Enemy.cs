@@ -28,9 +28,11 @@ public class Enemy : MonoBehaviour, IDamageable
     private float attackRange;
     [SerializeField] protected float attackRadius = 0.5f;
     [SerializeField] protected int damage = 1;
+    public int Damage { get; protected set; }
     [SerializeField] protected float detectionRange = 10;
     private float moveSpeedSlow = 0f;
     protected bool blind = false;
+    protected bool stopped = false;
     [SerializeField] private AnimationCurve slowCurve;
     protected GameObject SlimePrefab { get=>slimePrefab; }
     public int HP { get; protected set; }
@@ -72,6 +74,7 @@ public class Enemy : MonoBehaviour, IDamageable
         attackRange = (attackPoint == null)? 0 : Vector3.Distance(transform.position, attackPoint.position);
         HP = maxHP;
         timer = 0;
+        Damage = damage;
         animator = GetComponent<Animator>();
     }
 
@@ -98,9 +101,18 @@ public class Enemy : MonoBehaviour, IDamageable
 #endif
 
     public void Stop(){
+        Debug.Log("Enemy " + gameObject.name + " has stopped");
         blind = true;
-        damage = 0;
+        Damage = 0;
         SetState(EnemyState.Idle);
+        stopped = true;
+    }
+
+    public void Resume(){
+        Debug.Log("Enemy " + gameObject.name + " has resumed");
+        blind = false;
+        Damage = damage;
+        stopped = false;
     }
 
     protected void SetState(EnemyState newState){
@@ -161,7 +173,7 @@ public class Enemy : MonoBehaviour, IDamageable
         if(blind)
             return;
             
-        if(Physics.CheckCapsule(transform.position, new Vector3(transform.position.x, 0, transform.position.z), detectionRange, LayerMask.GetMask("Slime"))){
+        if(Physics.CheckSphere(transform.position, detectionRange, LayerMask.GetMask("Slime"))){
             Target = Slime.mainBody.transform;
             // SetState(EnemyState.Attacking);
             SetState(EnemyState.Fleeing);
@@ -178,7 +190,7 @@ public class Enemy : MonoBehaviour, IDamageable
         // Virtual para permitir implementação de ataques ranged, que n teremos nessa build
         foreach(Collider col in Physics.OverlapSphere(attackPoint.position, attackRadius, LayerMask.GetMask("Slime"))){
             Slime slime = col.GetComponent<Slime>();
-            slime.TakeDamage(damage);
+            slime.TakeDamage(Damage);
         }
     }
 
@@ -232,47 +244,55 @@ public class Enemy : MonoBehaviour, IDamageable
             GetComponent<Movable>().MoveSpeed *= (1 - moveSpeedSlow);
         }
 
-        switch(currentState){
-            case EnemyState.Attacking:
-                if(Target == null
-                || Vector3.Distance(transform.position, Target.position) > detectionRange * 1.2
-                || Target.GetComponent<IDamageable>().HP <= 0){
-                    SetState(EnemyState.Idle);
-                }else if(Vector3.Distance(transform.position, Target.position) <= (attackRange + attackRadius/2)){
-                    animator.SetBool("Attacking", true);
-                }else{
-                    animator.SetBool("Attacking", false);
-                }
-                break;
-            case EnemyState.Fleeing:
-                if(Target == null
-                || Vector3.Distance(transform.position, Target.position) >= GetComponent<MoveAwayFromTarget>().maxDistance
-                || Target.GetComponent<IDamageable>().HP <= 0){
-                    SetState(EnemyState.Idle);
-                }
-                break;
-            case EnemyState.Idle:
-                if(!GetComponent<MoveToNearbyPosition>().Walking){
-                    LookAround();
-                }
-                break;
-            case EnemyState.Null:
-                break;
-        }
+        if(!stopped){
+            switch(currentState){
+                case EnemyState.Attacking:
+                    if(Target == null
+                    || Vector3.Distance(transform.position, Target.position) > detectionRange * 1.2
+                    || Target.GetComponent<IDamageable>().HP <= 0){
+                        SetState(EnemyState.Idle);
+                    }else if(Vector3.Distance(transform.position, Target.position) <= (attackRange + attackRadius/2)){
+                        animator.SetBool("Attacking", true);
+                    }else{
+                        animator.SetBool("Attacking", false);
+                    }
+                    break;
+                case EnemyState.Fleeing:
+                    if(Target == null
+                    || Vector3.Distance(transform.position, Target.position) >= GetComponent<MoveAwayFromTarget>().maxDistance
+                    || Target.GetComponent<IDamageable>().HP <= 0){
+                        SetState(EnemyState.Idle);
+                    }
+                    break;
+                case EnemyState.Idle:
+                    if(!GetComponent<MoveToNearbyPosition>().Walking){
+                        LookAround();
+                    }
+                    break;
+                case EnemyState.Null:
+                    break;
+            }
 
-        timer += Time.deltaTime;
+            timer += Time.deltaTime;
+        }
     }
 
-    public virtual void Die(){ // Cada inimigo pode dar override nisso aqui, spawna o que spawna na morte e chama base.Die() Talvez um callback seja melhor?
-        if(HP <= 0){
-            if(mass > 0){
+    public virtual void Die(){
+        Die(false);
+    }
+
+    public virtual void Die(bool force){ // Cada inimigo pode dar override nisso aqui, spawna o que spawna na morte e chama base.Die() Talvez um callback seja melhor?
+        if(HP <= 0 || force){
+            Debug.Log("Enemy " + gameObject.name + " died");
+            if(mass > 0 && !force){
                 GetComponent<Collider>().enabled = false;
                 Slime newSlime = Instantiate(SlimePrefab, transform).GetComponent<Slime>();
                 newSlime.transform.SetParent(null, true);
                 newSlime.Grow(mass);
                 newSlime.SetState(Slime.SlimeState.Idle);
             }
-            OnDeath(this);
+            if(OnDeath != null)
+                OnDeath(this);
             Destroy(gameObject);
         }
     }

@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
 
     public void GoToMainMenu(){
         // TO DO: Muda de cena pro menu principal
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void Pause(){

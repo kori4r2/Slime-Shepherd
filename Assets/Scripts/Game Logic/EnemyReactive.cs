@@ -17,7 +17,7 @@ public class EnemyReactive : Enemy
 
     protected void Retaliate(int dmg){
         Debug.Log("chamou o callback");
-        Collider[] colliders = Physics.OverlapCapsule(transform.position, new Vector3(transform.position.x, 0, transform.position.z), detectionRange, LayerMask.GetMask("Slime"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRange, LayerMask.GetMask("Slime"));
         System.Array.Sort(colliders, CompareDistance);
 
         if(colliders.Length > 0){
