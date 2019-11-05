@@ -73,6 +73,8 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
+        active = Vector3.Distance(transform.position, Shepherd.instance.transform.position) < (spawnDistance + radius);
+
         if(active && Vector3.Distance(transform.position, Shepherd.instance.transform.position) >= (minPlayerDistance + radius) && enemiesAlive.Count < nEnemies){
             SpawnEnemy();
         }
