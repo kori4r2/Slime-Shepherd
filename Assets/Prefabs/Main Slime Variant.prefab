@@ -137,6 +137,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 6282328490080857785, guid: 763619dd5f235654f91f58213e3f43c8,
+        type: 3}
+      propertyPath: isMainBody
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6282328490080857765, guid: 763619dd5f235654f91f58213e3f43c8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -192,10 +197,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6282328490080857785, guid: 763619dd5f235654f91f58213e3f43c8,
+    - target: {fileID: 7606112941314726997, guid: 763619dd5f235654f91f58213e3f43c8,
         type: 3}
-      propertyPath: isMainBody
-      value: 1
+      propertyPath: minDistance
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7606112941314726997, guid: 763619dd5f235654f91f58213e3f43c8,
+        type: 3}
+      propertyPath: maxDistance
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7749723518365690082, guid: 763619dd5f235654f91f58213e3f43c8,
         type: 3}
@@ -211,16 +221,6 @@ PrefabInstance:
         type: 3}
       propertyPath: moveSpeed
       value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7606112941314726997, guid: 763619dd5f235654f91f58213e3f43c8,
-        type: 3}
-      propertyPath: minDistance
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7606112941314726997, guid: 763619dd5f235654f91f58213e3f43c8,
-        type: 3}
-      propertyPath: maxDistance
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7222996971979271272, guid: 763619dd5f235654f91f58213e3f43c8,
         type: 3}
