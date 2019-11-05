@@ -59,7 +59,7 @@ public class Shepherd : MonoBehaviour
         // }
         if(spawner != null){
             Debug.Log("Activating spawner " + other.gameObject.name);
-            spawner.active = true;
+            spawner.Activate();
         }
     }
 

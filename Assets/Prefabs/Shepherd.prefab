@@ -116,7 +116,7 @@ MonoBehaviour:
   slimeCallRadius: 5
   slimeCallParticles: {fileID: 5755537439829496498, guid: a8f4f6716729b004298e7b2b35e4e9e8,
     type: 3}
-  activeObjectsRadius: 60
+  activeObjectsRadius: 100
 --- !u!195 &2680115735645409140
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -294,7 +294,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 60
+  m_Radius: 100
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3005895758813752943
 GameObject:

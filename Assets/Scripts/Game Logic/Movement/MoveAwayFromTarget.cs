@@ -49,7 +49,15 @@ public class MoveAwayFromTarget : MoveTo{
 					lastPosition = target2Dposition;
 					NavMeshPath newPath = new NavMeshPath();
 					Vector2 escapePosition = current2Dposition + ((current2Dposition - target2Dposition).normalized * ((2*maxDistance) - distance));
-					GetComponent<NavMeshAgent>().CalculatePath(new Vector3(escapePosition.x, transform.position.y, escapePosition.y), newPath);
+
+					Vector3 actualPosition = new Vector3(escapePosition.x, transform.position.y, escapePosition.y);
+					NavMeshHit hit;
+					// Vai procurando uma area maior ate encontrar a posição da nav mesh mais proxima
+					int walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
+					for(int i = 2; !NavMesh.SamplePosition(actualPosition, out hit, i, walkableMask); i++);
+					lastPosition = new Vector2(hit.position.x, hit.position.z);
+
+					GetComponent<NavMeshAgent>().CalculatePath(hit.position, newPath);
 					running = true;
 					return newPath;
 				}else if(distance < maxDistance){

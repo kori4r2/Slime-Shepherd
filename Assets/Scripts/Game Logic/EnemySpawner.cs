@@ -30,10 +30,10 @@ public class EnemySpawner : MonoBehaviour
         Vector2 circlePos = Random.insideUnitCircle * radius;
         Vector3 position = transform.position + new Vector3(circlePos.x, 0, circlePos.y);
         NavMeshHit hit;
-        while(!NavMesh.SamplePosition(position, out hit, 2, NavMesh.AllAreas)){
-            circlePos = Random.insideUnitCircle * radius;
-            position = new Vector3(circlePos.x, transform.position.y, circlePos.y);
-        }
+
+        int walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
+        for(int i = 2; !NavMesh.SamplePosition(position, out hit, i, walkableMask); i++);
+
         position = hit.position;
 
         GameObject newObj = Instantiate(enemyPrefab, position, Quaternion.identity);
@@ -50,8 +50,11 @@ public class EnemySpawner : MonoBehaviour
 
     public void Activate(){
         active = true;
-        foreach(Enemy enemy in enemiesAlive){
-            enemy.gameObject.SetActive(true);
+        foreach(Enemy enemy in enemiesAlive.ToArray()){
+            if(enemy != null)
+                enemy.gameObject.SetActive(true);
+            else
+                enemiesAlive.Remove(enemy);
         }
     }
 
