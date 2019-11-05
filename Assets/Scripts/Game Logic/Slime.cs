@@ -20,6 +20,10 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     [SerializeField] private float lifeExpectancy = 10f;
     [SerializeField] private int nAttacks = 5;
     [SerializeField] private AnimationCurve growthCurve;
+    [SerializeField] private AudioClip walkSFX;
+    [SerializeField] private AudioClip attackSFX;
+    [SerializeField] private AudioClip damageSFX;
+    [SerializeField] private AudioClip deathSFX;
 
     public static Slime mainBody;
     public static int Count { get; private set; }

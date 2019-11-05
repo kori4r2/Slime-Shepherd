@@ -66,9 +66,10 @@ public class Enemy : MonoBehaviour, IDamageable
     private List<Slime> attackers = new List<Slime>();
     protected IntDelegate OnTakeDamage = null;
     private Animator animator;
+    public SpawnerDelegate OnDeath = null;
 
     public void Awake(){
-        attackRange = Vector3.Distance(transform.position, attackPoint.position);
+        attackRange = (attackPoint == null)? 0 : Vector3.Distance(transform.position, attackPoint.position);
         HP = maxHP;
         timer = 0;
         animator = GetComponent<Animator>();
@@ -79,8 +80,10 @@ public class Enemy : MonoBehaviour, IDamageable
     }
 
     public void OnValidate(){
-        GetComponent<MoveToTarget>().minDistance = Vector3.Distance(transform.position, attackPoint.position);
-        GetComponent<MoveToTarget>().maxDistance = Vector3.Distance(transform.position, attackPoint.position) + attackRadius/2;
+        if(attackPoint != null){
+            GetComponent<MoveToTarget>().minDistance = Vector3.Distance(transform.position, attackPoint.position);
+            GetComponent<MoveToTarget>().maxDistance = Vector3.Distance(transform.position, attackPoint.position) + attackRadius/2;
+        }
         GetComponent<MoveAwayFromTarget>().minDistance = detectionRange;
     }
 
@@ -172,7 +175,7 @@ public class Enemy : MonoBehaviour, IDamageable
     }
 
     public virtual void Attack(){
-        // Virtual para permitir implementação de attaques ranged, que n teremos nessa build
+        // Virtual para permitir implementação de ataques ranged, que n teremos nessa build
         foreach(Collider col in Physics.OverlapSphere(attackPoint.position, attackRadius, LayerMask.GetMask("Slime"))){
             Slime slime = col.GetComponent<Slime>();
             slime.TakeDamage(damage);
@@ -243,7 +246,7 @@ public class Enemy : MonoBehaviour, IDamageable
                 break;
             case EnemyState.Fleeing:
                 if(Target == null
-                || Vector3.Distance(transform.position, Target.position) > GetComponent<MoveAwayFromTarget>().maxDistance
+                || Vector3.Distance(transform.position, Target.position) >= GetComponent<MoveAwayFromTarget>().maxDistance
                 || Target.GetComponent<IDamageable>().HP <= 0){
                     SetState(EnemyState.Idle);
                 }
@@ -269,6 +272,7 @@ public class Enemy : MonoBehaviour, IDamageable
                 newSlime.Grow(mass);
                 newSlime.SetState(Slime.SlimeState.Idle);
             }
+            OnDeath(this);
             Destroy(gameObject);
         }
     }

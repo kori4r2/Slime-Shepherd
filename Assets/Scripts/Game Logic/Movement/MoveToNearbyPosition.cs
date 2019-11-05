@@ -7,6 +7,7 @@ public class MoveToNearbyPosition : MoveTo
 {
     [SerializeField] private float movementCooldown = 5f;
     [SerializeField] private float walkingRange = 10f;
+    [SerializeField, Range(0f, 1f)] private float minMoveRangeRelative = 0.3f;
     private float timer;
     private bool walking = false;
     public bool Walking { get=>walking; }
@@ -17,18 +18,19 @@ public class MoveToNearbyPosition : MoveTo
     }
 
     public override void Activate(){
-        enabled = true;
-        base.Activate();
         timer = movementCooldown;
         walking = false;
         targetPosition = Vector2.zero;
+		GetComponent<NavMeshAgent>().ResetPath();
+        enabled = true;
+        base.Activate();
     }
 
     public void Deactivate(){
         timer = movementCooldown;
         walking = false;
         targetPosition = Vector2.zero;
-        this.enabled = false;
+        enabled = false;
     }
 
     public override Vector2 Direction {
@@ -53,16 +55,44 @@ public class MoveToNearbyPosition : MoveTo
         }
     }
 
+    private Vector2 GetNearbyPosition(Vector2 position2D){
+        Vector2 random = Random.insideUnitCircle;
+        if(random.x < 0 && random.x > -minMoveRangeRelative){
+            random.x = -minMoveRangeRelative;
+        }
+        if(random.x >= 0 && random.x < minMoveRangeRelative){
+            random.x = minMoveRangeRelative;
+        }
+        if(random.y < 0 && random.y > -minMoveRangeRelative){
+            random.y = -minMoveRangeRelative;
+        }
+        if(random.y >= 0 && random.y < minMoveRangeRelative){
+            random.y = minMoveRangeRelative;
+        }
+
+        Vector2 newPosition = position2D + (walkingRange * random);
+        return newPosition;
+    }
+
     public override NavMeshPath Path{
         get{
             if(timer <= 0f){
                 Vector2 position2D = new Vector2(transform.position.x, transform.position.z);
                 if(!walking){
                     // calcula a proxima posição
-                    targetPosition = position2D + (walkingRange * Random.insideUnitCircle);
+                    targetPosition = GetNearbyPosition(position2D);
+
+                    Vector3 position = new Vector3(targetPosition.x, transform.position.y, targetPosition.y);
+                    NavMeshHit hit;
+                    while(!NavMesh.SamplePosition(position, out hit, 2, NavMesh.AllAreas)){
+                        targetPosition = GetNearbyPosition(position2D);
+                        position = new Vector3(targetPosition.x, transform.position.y, targetPosition.y);
+                    }
+                    position = hit.position;
+
                     walking = true;
                     NavMeshPath newPath = new NavMeshPath();
-                    GetComponent<NavMeshAgent>().CalculatePath(new Vector3(targetPosition.x, transform.position.y, targetPosition.y), newPath);
+                    GetComponent<NavMeshAgent>().CalculatePath(position, newPath);
                     return newPath;
                 }else{
                     if(Vector2.Distance(position2D, targetPosition) <= (GetComponent<Movable>().MoveSpeed * Time.fixedDeltaTime)){

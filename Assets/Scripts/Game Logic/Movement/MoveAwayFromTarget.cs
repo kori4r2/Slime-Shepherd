@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class MoveAwayFromTarget : MoveTo{
 	[SerializeField] public float maxDistance = 0.5f;
 	[SerializeField] public float minDistance = 0.5f;
+	private bool running = false;
 	public Transform target;
 	private Rigidbody rigid;
 	private Vector2 lastPosition;
@@ -19,11 +20,13 @@ public class MoveAwayFromTarget : MoveTo{
 	}
 
 	public void Activate(Transform newTarget){
+		GetComponent<NavMeshAgent>().ResetPath();
 		target = newTarget;
 		Activate();
 	}
 
 	override public void Activate(){
+		running =false;
 		base.Activate();
 		GetComponent<NavMeshAgent>().ResetPath();
 		GetComponent<NavMeshAgent>().stoppingDistance = 0;
@@ -41,15 +44,18 @@ public class MoveAwayFromTarget : MoveTo{
 			Vector2 current2Dposition = new Vector2(rigid.position.x, rigid.position.z);
 			float distance = Vector2.Distance(current2Dposition, target2Dposition);
 
-			if(distance < minDistance && distance < maxDistance){
+			if((distance < minDistance && distance < maxDistance) || running){
 				if(lastPosition != target2Dposition && (Vector2.Distance(lastPosition, target2Dposition) > 0.5f)){
 					lastPosition = target2Dposition;
 					NavMeshPath newPath = new NavMeshPath();
-					Vector2 escapePosition = current2Dposition + ((current2Dposition - target2Dposition).normalized * (maxDistance - distance));
+					Vector2 escapePosition = current2Dposition + ((current2Dposition - target2Dposition).normalized * ((2*maxDistance) - distance));
 					GetComponent<NavMeshAgent>().CalculatePath(new Vector3(escapePosition.x, transform.position.y, escapePosition.y), newPath);
+					running = true;
 					return newPath;
-				}else{
+				}else if(distance < maxDistance){
 					return GetComponent<NavMeshAgent>().path;
+				}else if(distance >= maxDistance){
+					running = false;
 				}
 			}
 
