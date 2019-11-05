@@ -289,14 +289,22 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     }
 
     private void OnTriggerEnter(Collider other){
+        Debug.Log("Trigger with " + other.gameObject.name);
         // Colisao com os inimigos
         if(CurrentState == SlimeState.Flying && other.gameObject.layer == LayerMask.NameToLayer("Enemy")){
             RaycastHit hit;
-            if(Physics.Raycast(transform.position, other.transform.position - transform.position, out hit, 2 * Vector3.Distance(transform.position, other.transform.position), LayerMask.GetMask("Enemy"))){
+            
+            Enemy enemy = other.GetComponent<Enemy>();
+            if(enemy == null) 
+            {
+                return;
+            }
+
+            if(Physics.Raycast(transform.position, enemy.centerPosition.position - transform.position, out hit, 2 * Vector3.Distance(transform.position, other.transform.position), LayerMask.GetMask("Enemy"))){
                 rb.velocity = Vector3.zero;
                 transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal);
                 transform.position = hit.point;
-                other.GetComponent<Enemy>().Attach(this);
+                enemy.Attach(this);
                 SetState(SlimeState.Attacking);
             }
         }

@@ -19,7 +19,8 @@ public class Enemy : MonoBehaviour, IDamageable
     }
 
     [SerializeField] private GameObject slimePrefab;
-    [SerializeField] protected int maxHP = 10;
+    public Transform centerPosition;
+    [SerializeField] protected int maxHP;
     [SerializeField] protected int mass = 1;
     [SerializeField] protected float damageCheckCooldown = 0.5f;
     [SerializeField] protected float lookAroundCooldown = 1.5f;
@@ -197,7 +198,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void Update(){
         // Checa o dano causado pelas slimes grudadas
-        if(timer > damageCheckCooldown){
+        if(timer > damageCheckCooldown && HP > 0){
             timer -= damageCheckCooldown;
 
             foreach(Slime slime in attackers.ToArray()){
@@ -218,7 +219,7 @@ public class Enemy : MonoBehaviour, IDamageable
                     slime.transform.SetParent(null, true);
                     slime.SetState(Slime.SlimeState.Idle);
                 }
-                Die();
+                animator.SetTrigger("Die");
             }
 
             float previousSlow = moveSpeedSlow;
