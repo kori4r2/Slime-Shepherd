@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 2640805712999175868}
   - component: {fileID: 2630641901522054710}
   - component: {fileID: 2652636489992326884}
+  - component: {fileID: 5361535358611156894}
   m_Layer: 0
   m_Name: Tree B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967294
   m_IsActive: 1
 --- !u!4 &2648192884917652354
 Transform:
@@ -94,3 +95,16 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.33200002, y: 3.7220001, z: -0.11}
   m_TimeToStationary: 0.5
+--- !u!65 &5361535358611156894
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2654226084919355074}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.1630163, y: 7.444212, z: 2.8133738}
+  m_Center: {x: 0.3324895, y: 3.722106, z: -0.40507376}

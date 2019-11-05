@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 6078578558919730809}
   - component: {fileID: 6088351044507679399}
   - component: {fileID: 6065780932710177173}
+  - component: {fileID: 7034006510242923529}
   m_Layer: 0
   m_Name: Bush A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967294
   m_IsActive: 1
 --- !u!4 &6062810107177094879
 Transform:
@@ -94,3 +95,16 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.034, y: 1.3390001, z: -0.002}
   m_TimeToStationary: 0.5
+--- !u!65 &7034006510242923529
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6065131658881554997}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.6542046, y: 2.6880705, z: 1.9711959}
+  m_Center: {x: 0.033952475, y: 1.3387955, z: -0.002206713}

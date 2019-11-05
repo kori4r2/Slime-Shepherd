@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 7439108929976166509}
   - component: {fileID: 7430364514563588221}
   - component: {fileID: 7442459395090803289}
+  - component: {fileID: 5111451422746201870}
   m_Layer: 0
   m_Name: Rock B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967294
   m_IsActive: 1
 --- !u!4 &7446919396046043219
 Transform:
@@ -94,3 +95,16 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0.142, y: 0.12100001, z: 0.038000003}
   m_TimeToStationary: 0.5
+--- !u!65 &5111451422746201870
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7444148443720452537}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.6173592, y: 2.012907, z: 2.1517613}
+  m_Center: {x: 0.14191061, y: 0.12104565, z: 0.038137436}
