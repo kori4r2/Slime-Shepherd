@@ -10,6 +10,9 @@ public class EnemyReactive : Enemy
     }
 
     protected override void LookAround(){
+        if(blind)
+            return;
+
     }
 
     protected void Retaliate(int dmg){

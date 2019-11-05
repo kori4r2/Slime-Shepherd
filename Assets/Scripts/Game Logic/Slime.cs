@@ -41,7 +41,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     private Vector3 initialPosition;
     private float timer;
     private int attacksLeft;
-    private bool isHerd;
+    private bool isHerd = false;
     public int HP {
         get => size;
         private set{
@@ -144,6 +144,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 GetComponent<NavMeshAgent>().enabled = true;
                 GetComponent<NavMeshAgent>().ResetPath();
                 GetComponent<Movable>().CanMove = true;
+                GetComponent<Movable>().MoveSpeed *= 1.3f;
                 GetComponent<MoveToNearbyPosition>().Deactivate(); // Unico Moveto com update
 
                 GetComponent<MoveToTarget>().Activate(mainBody.transform);
@@ -193,8 +194,6 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
                 anim.SetBool("ChargingAttack", false);
-
-                isHerd = false;
                 break;
         }
         CurrentState = newState;
@@ -269,9 +268,10 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     }
 
     public bool TakeDamage(int dmg){
+        int previousSize = size;
         Shrink(dmg);
         if(isHerd){
-            HerdSize -= Mathf.Min(dmg, size);
+            HerdSize -= Mathf.Min(dmg, previousSize);
         }
         anim.SetTrigger("Hit");
         return (HP <= 0);
@@ -280,39 +280,31 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     // Função pra ser chamada no animator
     public void Die(){
         if(size <= 0){
-            if(isHerd){
-
-            }
             Destroy(gameObject);
         }
     }
 
     private void OnTriggerEnter(Collider other){
+        Debug.Log("Trigger with " + other.gameObject.name);
         // Colisao com os inimigos
         if(CurrentState == SlimeState.Flying && other.gameObject.layer == LayerMask.NameToLayer("Enemy")){
             RaycastHit hit;
-            if(Physics.Raycast(transform.position, other.transform.position - transform.position, out hit, 2 * Vector3.Distance(transform.position, other.transform.position), LayerMask.GetMask("Enemy"))){
+            
+            Enemy enemy = other.GetComponent<Enemy>();
+            if(enemy == null) 
+            {
+                return;
+            }
+
+            if(Physics.Raycast(transform.position, enemy.centerPosition.position - transform.position, out hit, 2 * Vector3.Distance(transform.position, other.transform.position), LayerMask.GetMask("Enemy"))){
                 rb.velocity = Vector3.zero;
                 transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal);
                 transform.position = hit.point;
-                other.GetComponent<Enemy>().Attach(this);
+                enemy.Attach(this);
                 SetState(SlimeState.Attacking);
             }
         }
     }
-
-    // void OnCollisionEnter(Collision other){
-    //     // Colisao com a slime principal
-    //     if(CurrentState == SlimeState.Returning && other.gameObject.layer == LayerMask.NameToLayer("Slime")){
-    //         Slime otherSlime = other.gameObject.GetComponent<Slime>();
-    //         if(otherSlime.isMainBody){
-    //             otherSlime.Grow(size);
-    //             // Talvez mudar como isso acontece (mas provavelmente n)
-    //             size = 0;
-    //             Die();
-    //         }
-    //     }
-    // }
 
     public void Update(){
         switch(CurrentState){

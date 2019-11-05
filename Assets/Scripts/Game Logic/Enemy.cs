@@ -19,16 +19,18 @@ public class Enemy : MonoBehaviour, IDamageable
     }
 
     [SerializeField] private GameObject slimePrefab;
+    public Transform centerPosition;
     [SerializeField] protected int maxHP;
     [SerializeField] protected int mass = 1;
-    [SerializeField] protected float damageCheckCooldown;
-    [SerializeField] protected float lookAroundCooldown;
+    [SerializeField] protected float damageCheckCooldown = 0.5f;
+    [SerializeField] protected float lookAroundCooldown = 1.5f;
     [SerializeField] protected Transform attackPoint;
     private float attackRange;
-    [SerializeField] protected float attackRadius;
-    [SerializeField] protected int damage;
-    [SerializeField] protected float detectionRange;  
-    private float moveSpeedSlow = 0f;  
+    [SerializeField] protected float attackRadius = 0.5f;
+    [SerializeField] protected int damage = 1;
+    [SerializeField] protected float detectionRange = 10;
+    private float moveSpeedSlow = 0f;
+    protected bool blind = false;
     [SerializeField] private AnimationCurve slowCurve;
     protected GameObject SlimePrefab { get=>slimePrefab; }
     public int HP { get; protected set; }
@@ -92,6 +94,12 @@ public class Enemy : MonoBehaviour, IDamageable
     }
 #endif
 
+    public void Stop(){
+        blind = true;
+        damage = 0;
+        SetState(EnemyState.Idle);
+    }
+
     protected void SetState(EnemyState newState){
         switch(newState){
             case EnemyState.Attacking:
@@ -147,6 +155,9 @@ public class Enemy : MonoBehaviour, IDamageable
 
     // Essa função checa se tem alguma slime no alcance de detecção e reage de maneira apropriada
     protected virtual void LookAround(){
+        if(blind)
+            return;
+            
         if(Physics.CheckCapsule(transform.position, new Vector3(transform.position.x, 0, transform.position.z), detectionRange, LayerMask.GetMask("Slime"))){
             Target = Slime.mainBody.transform;
             // SetState(EnemyState.Attacking);
@@ -184,7 +195,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void Update(){
         // Checa o dano causado pelas slimes grudadas
-        if(timer > damageCheckCooldown){
+        if(timer > damageCheckCooldown && HP > 0){
             timer -= damageCheckCooldown;
 
             foreach(Slime slime in attackers.ToArray()){
@@ -205,7 +216,7 @@ public class Enemy : MonoBehaviour, IDamageable
                     slime.transform.SetParent(null, true);
                     slime.SetState(Slime.SlimeState.Idle);
                 }
-                Die();
+                animator.SetTrigger("Die");
             }
 
             float previousSlow = moveSpeedSlow;

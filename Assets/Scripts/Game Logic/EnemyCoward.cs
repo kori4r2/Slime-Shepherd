@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnemyCoward : Enemy
 {
     protected override void LookAround(){
+        if(blind)
+            return;
+
         Collider[] colliders = Physics.OverlapCapsule(transform.position, new Vector3(transform.position.x, 0, transform.position.z), detectionRange, LayerMask.GetMask("Slime"));
         System.Array.Sort(colliders, CompareDistance);
 

@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa23a5cd2743df4c8c398524b3bd196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fillImage: {fileID: 0}
   Projectile: {fileID: 6282328490080857786, guid: 763619dd5f235654f91f58213e3f43c8,
     type: 3}
   projectileSpeed: 10
@@ -190,36 +191,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6282328490080857765, guid: 763619dd5f235654f91f58213e3f43c8,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6282328490080857765, guid: 763619dd5f235654f91f58213e3f43c8,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6282328490080857765, guid: 763619dd5f235654f91f58213e3f43c8,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6282328490080857784, guid: 763619dd5f235654f91f58213e3f43c8,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6282328490080857784, guid: 763619dd5f235654f91f58213e3f43c8,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.45562077
-      objectReference: {fileID: 0}
-    - target: {fileID: 6282328490080857784, guid: 763619dd5f235654f91f58213e3f43c8,
-        type: 3}
-      propertyPath: m_Center.y
-      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6282328490080857785, guid: 763619dd5f235654f91f58213e3f43c8,
         type: 3}

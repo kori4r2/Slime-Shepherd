@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Launcher : MonoBehaviour
 {
+    [SerializeField] private FillImage fillImage;
     [SerializeField] private GameObject Projectile;
     [SerializeField] private float projectileSpeed = 10.0f;
     [SerializeField] private float heightOffset = 0.3f;
@@ -60,6 +61,7 @@ public class Launcher : MonoBehaviour
         // A função de shrink já diminui a munição
         //ammo -= ChargeLevel;
         GetComponent<Slime>()?.Shrink(ChargeLevel);
+        ChargeLevel = 0;
     }
 
     public void Reload(int count){
@@ -91,6 +93,12 @@ public class Launcher : MonoBehaviour
             transform.LookAt(new Vector3(targetPosition.x, transform.position.y, targetPosition.z));
 
             timer += Time.deltaTime;
+        }
+
+        // Debug.Log("ammo = " + ammo + "; chargeLevel = " + chargeLevel);
+        if(fillImage != null){
+            fillImage.MaxValue = ammo;
+            fillImage.CurrentValue = chargeLevel;
         }
     }
 }
