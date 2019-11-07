@@ -12,10 +12,10 @@ public enum GameModes{
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Text gameModeName;
-    [SerializeField] private Text timerText;
-    [SerializeField] private Text scoreText;
-    [SerializeField] private Text finalScoreText;
+    [SerializeField] private TMPro.TMP_Text gameModeName;
+    [SerializeField] private TMPro.TMP_Text timerText;
+    [SerializeField] private TMPro.TMP_Text scoreText;
+    [SerializeField] private TMPro.TMP_Text finalScoreText;
     [SerializeField] private GameObject gameOverUI;
     private float timer;
     private static bool gameStarted = false;
