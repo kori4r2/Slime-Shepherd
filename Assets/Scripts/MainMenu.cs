@@ -15,6 +15,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Selectable firstActivGameModeMenuItem;
     private GameObject lastSelect;
 
+    public float timeLimit = 10;
+    public float targetScore = 10;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,11 +49,13 @@ public class MainMenu : MonoBehaviour
 
     public void StartTimeAttackGame(){
         GameManager.GameMode = GameModes.TimeAttack;
+        GameManager.TargetScore = targetScore;
         SceneManager.LoadScene("Woods1");
     }
 
     public void StartHighScoreGame(){
         GameManager.GameMode = GameModes.HighScore;
+        GameManager.TimeLimit = timeLimit;
         SceneManager.LoadScene("Woods1");
     }
 

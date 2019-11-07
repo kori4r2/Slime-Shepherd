@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
                 timerText.text = GetTimeString(timer);
             }
             scoreText.text = Slime.HerdSize + ((GameMode == GameModes.TimeAttack)? ("/" + targetScore) : "");
-            //CheckGameEnd();
+            CheckGameEnd();
 
             timer += Time.deltaTime;
             // A pessoa precisa jogar por quase 25 mil dias pra isso aqui ser relevante, mas vai que

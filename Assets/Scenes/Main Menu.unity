@@ -5956,6 +5956,8 @@ MonoBehaviour:
   firstActiveOptionsMenuItem: {fileID: 1003819810}
   gameModeMenu: {fileID: 1236682337}
   firstActivGameModeMenuItem: {fileID: 1651524883}
+  timeLimit: 120
+  targetScore: 30
 --- !u!1001 &1558558733
 PrefabInstance:
   m_ObjectHideFlags: 0
