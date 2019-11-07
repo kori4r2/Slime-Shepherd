@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void Unpause(){
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
         // TO DO: Spawna as UI na tela
     }
 
