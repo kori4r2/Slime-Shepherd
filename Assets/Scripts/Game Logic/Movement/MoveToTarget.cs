@@ -49,7 +49,14 @@ public class MoveToTarget : MoveTo{
 				if(lastPosition != target2Dposition && (Vector2.Distance(lastPosition, target2Dposition) > (minDistance/4f))){
 					lastPosition = target2Dposition;
 					NavMeshPath newPath = new NavMeshPath();
-					GetComponent<NavMeshAgent>().CalculatePath(target.position, newPath);
+
+					NavMeshHit hit;
+					// Vai procurando uma area maior ate encontrar a posição da nav mesh mais proxima
+					int walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
+					for(int i = 2; !NavMesh.SamplePosition(target.position, out hit, i, walkableMask); i++);
+					lastPosition = new Vector2(hit.position.x, hit.position.z);
+
+					GetComponent<NavMeshAgent>().CalculatePath(hit.position, newPath);
 					return newPath;
 				}else{
 					return GetComponent<NavMeshAgent>().path;
