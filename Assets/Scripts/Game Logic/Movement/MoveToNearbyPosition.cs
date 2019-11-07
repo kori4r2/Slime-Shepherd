@@ -51,6 +51,7 @@ public class MoveToNearbyPosition : MoveTo
                     }
                 }
             }
+            walking = false;
             return Vector2.zero;
         }
     }

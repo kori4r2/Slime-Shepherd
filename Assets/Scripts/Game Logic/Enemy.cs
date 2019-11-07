@@ -265,9 +265,10 @@ public class Enemy : MonoBehaviour, IDamageable
                     }
                     break;
                 case EnemyState.Idle:
-                    if(!GetComponent<MoveToNearbyPosition>().Walking){
+                    // BUGFIX: remove verification just at this moment
+                    // if(!GetComponent<MoveToNearbyPosition>().Walking){
                         LookAround();
-                    }
+                    // }
                     break;
                 case EnemyState.Null:
                     break;
