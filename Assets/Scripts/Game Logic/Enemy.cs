@@ -248,10 +248,11 @@ public class Enemy : MonoBehaviour, IDamageable
             switch(currentState){
                 case EnemyState.Attacking:
                     if(Target == null
-                    || Vector3.Distance(transform.position, Target.position) > detectionRange * 1.2
+                    || Vector3.Distance(transform.position, Target.position) > detectionRange * 1.1
                     || Target.GetComponent<IDamageable>().HP <= 0){
                         SetState(EnemyState.Idle);
-                    }else if(Vector3.Distance(transform.position, Target.position) <= (attackRange + attackRadius/2)){
+                    }else if(Target != null && Target.gameObject.layer == LayerMask.NameToLayer("Slime") &&
+                        Vector3.Distance(attackPoint.position, Target.position) <= ((attackRadius/2) + (Target.gameObject.transform.localScale.x/2f)) ){
                         animator.SetBool("Attacking", true);
                     }else{
                         animator.SetBool("Attacking", false);
@@ -266,9 +267,9 @@ public class Enemy : MonoBehaviour, IDamageable
                     break;
                 case EnemyState.Idle:
                     // BUGFIX: remove verification just at this moment
-                    // if(!GetComponent<MoveToNearbyPosition>().Walking){
+                    if(!GetComponent<MoveToNearbyPosition>().Walking){
                         LookAround();
-                    // }
+                    }
                     break;
                 case EnemyState.Null:
                     break;

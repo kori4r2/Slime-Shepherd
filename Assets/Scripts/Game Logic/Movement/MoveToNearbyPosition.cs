@@ -78,6 +78,7 @@ public class MoveToNearbyPosition : MoveTo
     public override NavMeshPath Path{
         get{
             if(timer <= 0f){
+                NavMeshAgent agent = GetComponent<NavMeshAgent>();
                 Vector2 position2D = new Vector2(transform.position.x, transform.position.z);
                 if(!walking){
                     // calcula a proxima posição
@@ -91,12 +92,16 @@ public class MoveToNearbyPosition : MoveTo
 
                     walking = true;
                     NavMeshPath newPath = new NavMeshPath();
-                    GetComponent<NavMeshAgent>().CalculatePath(hit.position, newPath);
+                    agent.CalculatePath(hit.position, newPath);
                     return newPath;
                 }else{
-                    if(Vector2.Distance(position2D, targetPosition) <= 2 * (GetComponent<Movable>().MoveSpeed * Time.fixedDeltaTime)){
+                    Debug.Log("walking deu true");
+                    if(Vector3.Distance(transform.position, agent.pathEndPosition) <= 2f
+                    || Vector3.Distance(agent.nextPosition, agent.pathEndPosition) <= 2f){
+                           
                         walking = false;
                         timer = movementCooldown;
+                        return null;
                     }else{
                         return GetComponent<NavMeshAgent>().path;
                     }

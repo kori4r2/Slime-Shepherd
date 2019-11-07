@@ -15,6 +15,7 @@ public class TutorialWindow : MonoBehaviour
     void Start()
     {
         GameManager.instance.Pause();
+        Shepherd.instance.GetComponent<Movable>().CanMove = false;
 
         if(GameManager.GameMode == GameModes.TimeAttack)
         {
@@ -33,6 +34,7 @@ public class TutorialWindow : MonoBehaviour
     public void Unpause()
     {
         GameManager.instance.Unpause();
+        Shepherd.instance.GetComponent<Movable>().CanMove = true;
     }
 
 }

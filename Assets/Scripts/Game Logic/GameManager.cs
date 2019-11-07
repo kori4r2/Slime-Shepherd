@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    private static GameModes gameMode;
+    private static GameModes gameMode = GameModes.HighScore;
     public static float TimeLimit{
         get => timeLimit;
         set{

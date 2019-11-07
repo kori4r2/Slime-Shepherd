@@ -14,7 +14,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject creditsPanel;
     [SerializeField] private Selectable firstActiveOptionsMenuItem;
     [SerializeField] private GameObject gameModeMenu;
-    [SerializeField] private Selectable firstActivGameModeMenuItem;
+    [SerializeField] private Selectable firstActiveGameModeMenuItem;
+    [SerializeField] private Selectable firstActiveCreditsMenuItem;
     private GameObject lastSelect;
 
     public float timeLimit = 10;
@@ -43,7 +44,7 @@ public class MainMenu : MonoBehaviour
         gameModeMenu.SetActive(true);
         creditsMenu.SetActive(false);
         creditsPanel.SetActive(false);
-        firstActivGameModeMenuItem.Select();
+        firstActiveGameModeMenuItem.Select();
     }
 
     public void GoToOptions(){
@@ -61,7 +62,7 @@ public class MainMenu : MonoBehaviour
         optionsMenu.SetActive(false);
         creditsMenu.SetActive(true);
         creditsPanel.SetActive(true);
-        firstActiveOptionsMenuItem.Select();
+        firstActiveCreditsMenuItem.Select();
     }
 
     public void StartTimeAttackGame(){
