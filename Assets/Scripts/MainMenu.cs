@@ -10,6 +10,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private Selectable firstActiveMainMenuItem;
     [SerializeField] private GameObject optionsMenu;
+    [SerializeField] private GameObject creditsMenu;
+    [SerializeField] private GameObject creditsPanel;
     [SerializeField] private Selectable firstActiveOptionsMenuItem;
     [SerializeField] private GameObject gameModeMenu;
     [SerializeField] private Selectable firstActivGameModeMenuItem;
@@ -30,6 +32,8 @@ public class MainMenu : MonoBehaviour
         gameModeMenu.SetActive(false);
         optionsMenu.SetActive(false);
         mainMenu.SetActive(true);
+        creditsMenu.SetActive(false);
+        creditsPanel.SetActive(false);
         firstActiveMainMenuItem.Select();
     }
 
@@ -37,6 +41,8 @@ public class MainMenu : MonoBehaviour
         mainMenu.SetActive(false);
         optionsMenu.SetActive(false);
         gameModeMenu.SetActive(true);
+        creditsMenu.SetActive(false);
+        creditsPanel.SetActive(false);
         firstActivGameModeMenuItem.Select();
     }
 
@@ -44,6 +50,17 @@ public class MainMenu : MonoBehaviour
         mainMenu.SetActive(false);
         gameModeMenu.SetActive(false);
         optionsMenu.SetActive(true);
+        creditsMenu.SetActive(false);
+        creditsPanel.SetActive(false);
+        firstActiveOptionsMenuItem.Select();
+    }
+
+    public void GoToCredits(){
+        mainMenu.SetActive(false);
+        gameModeMenu.SetActive(false);
+        optionsMenu.SetActive(false);
+        creditsMenu.SetActive(true);
+        creditsPanel.SetActive(true);
         firstActiveOptionsMenuItem.Select();
     }
 
