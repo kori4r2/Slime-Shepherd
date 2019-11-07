@@ -13,6 +13,11 @@ public class VolumeChanger : MonoBehaviour
 
     void Awake(){
         slider = GetComponent<Slider>();
+        
+        float volume;
+        mixer.GetFloat("Volume",out volume);
+        volume = Mathf.Pow(10,volume) * slider.maxValue;
+        slider.value = volume;
     }
 
     public void UpdateVolumeValue(){
