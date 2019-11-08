@@ -8,7 +8,7 @@ public class SlimeObstacle : MonoBehaviour
     void OnTriggerEnter(Collider collider)
     {
         Slime slime = collider.GetComponent<Slime>();
-        if(slime != null)
+        if(slime != null && slime.CurrentState == Slime.SlimeState.Flying)
         {
             collider.isTrigger = false;
 

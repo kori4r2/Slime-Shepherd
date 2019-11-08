@@ -146,6 +146,7 @@ MonoBehaviour:
     type: 3}
   centerPosition: {fileID: 0}
   maxHP: 5
+  barHP: {fileID: 0}
   mass: 1
   damageCheckCooldown: 0.5
   lookAroundCooldown: 2
@@ -231,6 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementCooldown: 5
   walkingRange: 10
+  minMoveRangeRelative: 0.3
 --- !u!114 &1557620504235562213
 MonoBehaviour:
   m_ObjectHideFlags: 0

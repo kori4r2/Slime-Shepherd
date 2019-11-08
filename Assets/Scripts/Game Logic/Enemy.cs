@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private GameObject slimePrefab;
     public Transform centerPosition;
     [SerializeField] protected int maxHP;
+    [SerializeField] protected FillImage barHP;
     [SerializeField] protected int mass = 1;
     [SerializeField] protected float damageCheckCooldown = 0.5f;
     [SerializeField] protected float lookAroundCooldown = 1.5f;
@@ -35,7 +36,25 @@ public class Enemy : MonoBehaviour, IDamageable
     protected bool stopped = false;
     [SerializeField] private AnimationCurve slowCurve;
     protected GameObject SlimePrefab { get=>slimePrefab; }
-    public int HP { get; protected set; }
+    protected int _HP;
+    public int HP { 
+        get
+        {
+            return _HP;
+        }
+        protected set
+        {
+            // Ativar barra de vida e diminuir valor
+            if(value < HP)
+            {
+                barHP.transform.parent.gameObject.SetActive(true);
+                barHP.MaxValue = maxHP;
+                barHP.CurrentValue = value;
+            }
+
+            _HP = value;
+        } 
+    }
     private EnemyState currentState;
     protected EnemyState CurrentState { get=>currentState; }
     private float timer;

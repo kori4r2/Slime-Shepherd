@@ -110,7 +110,14 @@ public class GameManager : MonoBehaviour
         foreach(Enemy enemy in FindObjectsOfType<Enemy>()){
             enemy.Stop();
         }
-        finalScoreText.text = GetTimeString(time);
+        if(!lost)
+        {
+            finalScoreText.text = GetTimeString(time);
+        }
+        else
+        {
+            finalScoreText.text = "0";
+        }
         gameOverUI.SetActive(true);
     }
 
@@ -147,7 +154,13 @@ public class GameManager : MonoBehaviour
             System.TimeSpan timeSpan = new System.TimeSpan(0, 0, (int)timer);
             if(timeSpan.Days > 0){
                 timerText.text = "STOP!";
-            }else{
+            }else if (GameMode == GameModes.HighScore){
+                float useTime = timeLimit - timer;
+                if(useTime < 0)
+                    useTime = 0;
+                timerText.text = GetTimeString(useTime);
+            }
+            else {
                 timerText.text = GetTimeString(timer);
             }
             scoreText.text = Slime.HerdSize + ((GameMode == GameModes.TimeAttack)? ("/" + targetScore) : "");
