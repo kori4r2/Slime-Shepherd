@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 15
-  minDistance: 10
+  minDistance: 6
   target: {fileID: 0}
 --- !u!195 &8494896822275047711
 NavMeshAgent:
@@ -260,7 +260,7 @@ MonoBehaviour:
   attackPoint: {fileID: 6007907673879552536}
   attackRadius: 1
   damage: 1
-  detectionRange: 10
+  detectionRange: 6
   slowCurve:
     serializedVersion: 2
     m_Curve:
