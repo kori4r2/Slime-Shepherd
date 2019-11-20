@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 4412187970842077279}
   - component: {fileID: 6094654015791825275}
   - component: {fileID: 1283918256323187492}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Shepherd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ NavMeshObstacle:
   m_Carve: 0
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
+  m_TimeToStationary: 2
 --- !u!95 &9113889609098452179
 Animator:
   serializedVersion: 3

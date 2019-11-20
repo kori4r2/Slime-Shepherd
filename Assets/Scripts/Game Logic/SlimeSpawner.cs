@@ -23,12 +23,12 @@ public class SlimeSpawner : MonoBehaviour
 
     private void SpawnSlime(){
         Vector2 circlePos = Random.insideUnitCircle * radius;
-        Vector3 position = new Vector3(transform.position.x + circlePos.x, transform.position.y, transform.position.z + circlePos.y);
+        Vector3 position = transform.position + new Vector3(circlePos.x, 0, circlePos.y);
         NavMeshHit hit;
-        while(!NavMesh.SamplePosition(position, out hit, 2, NavMesh.AllAreas)){
-            circlePos = Random.insideUnitCircle * radius;
-            position = new Vector3(transform.position.x + circlePos.x, transform.position.y, transform.position.z + circlePos.y);
-        }
+
+        int walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
+        for(int i = 2; !NavMesh.SamplePosition(position, out hit, i, walkableMask); i++);
+
         position = hit.position;
 
         GameObject newObj = Instantiate(slimePrefab, position, Quaternion.identity);
@@ -48,6 +48,12 @@ public class SlimeSpawner : MonoBehaviour
 
     void Update()
     {
+        foreach(Slime slime in slimesAlive.ToArray()){
+            if(slime == null){
+                slimesAlive.Remove(slime);
+            }
+        }
+        
         if(slimesAlive.Count < nSlimes){
             SpawnSlime();
         }

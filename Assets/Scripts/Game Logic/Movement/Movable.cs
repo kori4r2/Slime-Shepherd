@@ -57,7 +57,7 @@ public class Movable : MonoBehaviour {
 				Vector2 direction2D = nextPosition.Direction;
 				rigid.velocity = new Vector3(direction2D.x * moveSpeed, rigid.velocity.y, direction2D.y * moveSpeed);
 				if(direction2D != Vector2.zero){
-					transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rigid.velocity.normalized), turnRate);
+					transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rigid.velocity.normalized, Vector3.up), turnRate);
 				}
 			}else if(agent.enabled){
 				rigid.isKinematic = true;
@@ -85,5 +85,12 @@ public class Movable : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public static float Distance2D(Vector3 a, Vector3 b){
+		Vector2 a2D = new Vector2(a.x, a.z);
+		Vector2 b2D = new Vector2(b.x, b.z);
+
+		return Vector2.Distance(a2D, b2D);
 	}
 }

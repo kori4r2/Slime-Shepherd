@@ -84,21 +84,20 @@ public class MoveToNearbyPosition : MoveTo
                     // calcula a proxima posição
                     targetPosition = GetNearbyPosition(position2D);
 
+                    // Se certifica de que a posição está dentro da nav mesh
                     Vector3 position = new Vector3(targetPosition.x, transform.position.y, targetPosition.y);
                     NavMeshHit hit;
 					int walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
                     for(int i = 0; !NavMesh.SamplePosition(position, out hit, i, walkableMask); i++);
-                    targetPosition = new Vector2(position.x, position.z);
+                    targetPosition = new Vector2(hit.position.x, hit.position.z);
 
                     walking = true;
                     NavMeshPath newPath = new NavMeshPath();
                     agent.CalculatePath(hit.position, newPath);
+
                     return newPath;
                 }else{
-                    Debug.Log("walking deu true");
-                    if(Vector3.Distance(transform.position, agent.pathEndPosition) <= 2f
-                    || Vector3.Distance(agent.nextPosition, agent.pathEndPosition) <= 2f){
-                           
+                    if(agent.remainingDistance <= 1f){
                         walking = false;
                         timer = movementCooldown;
                         return null;

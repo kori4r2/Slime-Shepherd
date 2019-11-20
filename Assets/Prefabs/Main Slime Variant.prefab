@@ -16,7 +16,6 @@ MonoBehaviour:
   Projectile: {fileID: 6282328490080857786, guid: 763619dd5f235654f91f58213e3f43c8,
     type: 3}
   projectileSpeed: 15
-  heightOffset: 0.2
   maxDistance: 20
   chargeTime: 0.8
   startingAmmo: 5
@@ -191,7 +190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 295d62680c9b5624a8c63550bc8349a3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 295d62680c9b5624a8c63550bc8349a3, type: 3}
       propertyPath: m_LocalPosition.z

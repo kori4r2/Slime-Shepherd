@@ -7,7 +7,6 @@ public class Launcher : MonoBehaviour
     [SerializeField] private FillImage fillImage;
     [SerializeField] private GameObject Projectile;
     [SerializeField] private float projectileSpeed = 10.0f;
-    [SerializeField] private float heightOffset = 0.3f;
     [SerializeField] private float maxDistance = 50.0f;
     [SerializeField] private float chargeTime = 0.5f;
     [SerializeField] private int startingAmmo = 5;
@@ -55,9 +54,9 @@ public class Launcher : MonoBehaviour
         GetComponent<Slime>()?.SetState(Slime.SlimeState.Following);
         transform.Find("Arrow")?.gameObject.SetActive(false);
         //shoot projectile on launchDirection
-        GameObject proj = Instantiate(Projectile, new Vector3(transform.position.x, transform.position.y + heightOffset, transform.position.z), transform.rotation);
-        (proj.GetComponent<IProjectile>())?.Launch(transform.forward, projectileSpeed, maxDistance);
+        GameObject proj = Instantiate(Projectile, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
         (proj.GetComponent<Slime>())?.Grow(ChargeLevel);
+        (proj.GetComponent<IProjectile>())?.Launch(transform.forward, projectileSpeed, maxDistance);
         // A função de shrink já diminui a munição
         //ammo -= ChargeLevel;
         GetComponent<Slime>()?.Shrink(ChargeLevel);

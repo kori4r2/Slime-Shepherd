@@ -253,6 +253,15 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     }
 
     public void Launch(Vector3 direction, float speed, float maxDistance = float.PositiveInfinity){
+        // Ajusta a altura da slime para garantir que o colisor está rente ao chão
+        float heightOffset = 0.3f;
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, Vector3.down, out hit, size * 5, LayerMask.GetMask("Ground"))){
+            float currentHeight = Vector3.Distance(transform.position, hit.point);
+            heightOffset = ((col as SphereCollider).radius - (col as SphereCollider).center.y) - currentHeight;
+        }
+        transform.position = new Vector3(transform.position.x, transform.position.y + heightOffset, transform.position.z);
+
         SetState(SlimeState.Flying);
         //rb.velocity = speed * direction;
         rb.velocity = new Vector3(speed * direction.x, 0f, speed * direction.z);

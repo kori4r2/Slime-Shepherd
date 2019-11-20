@@ -267,11 +267,12 @@ public class Enemy : MonoBehaviour, IDamageable
             switch(currentState){
                 case EnemyState.Attacking:
                     if(Target == null
-                    || Vector3.Distance(transform.position, Target.position) > detectionRange * 1.1
+                    || Movable.Distance2D(transform.position, Target.position) > detectionRange * 1.1
                     || Target.GetComponent<IDamageable>().HP <= 0){
                         SetState(EnemyState.Idle);
                     }else if(Target != null && Target.gameObject.layer == LayerMask.NameToLayer("Slime") &&
-                        Vector3.Distance(attackPoint.position, Target.position) <= ((attackRadius/2) + (Target.gameObject.transform.localScale.x/2f)) ){
+                        Movable.Distance2D(attackPoint.position, Target.position) <= ((attackRadius * 0.75f) + (Target.gameObject.transform.localScale.x * 0.5f)) ){
+                        transform.LookAt(Target, Vector3.up);
                         animator.SetBool("Attacking", true);
                     }else{
                         animator.SetBool("Attacking", false);
@@ -279,7 +280,7 @@ public class Enemy : MonoBehaviour, IDamageable
                     break;
                 case EnemyState.Fleeing:
                     if(Target == null
-                    || Vector3.Distance(transform.position, Target.position) >= GetComponent<MoveAwayFromTarget>().maxDistance
+                    || Movable.Distance2D(transform.position, Target.position) >= GetComponent<MoveAwayFromTarget>().maxDistance
                     || Target.GetComponent<IDamageable>().HP <= 0){
                         SetState(EnemyState.Idle);
                     }
