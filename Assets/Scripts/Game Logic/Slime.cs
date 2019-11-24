@@ -304,7 +304,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
             RaycastHit hit;
             
             Enemy enemy = other.GetComponent<Enemy>();
-            if(enemy == null) 
+            if(enemy == null || enemy.HP == 0) 
             {
                 return;
             }
