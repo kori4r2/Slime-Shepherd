@@ -88,7 +88,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 GetComponent<MoveToNearbyPosition>().Activate();
 
                 col.isTrigger = false;
-                rb.useGravity = true;
+                rb.useGravity = false;
                 rb.isKinematic = true;
                 initialPosition = transform.position;
 
@@ -105,8 +105,8 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 GetComponent<MoveToNearbyPosition>().Deactivate(); // Unico Moveto com update
 
                 col.isTrigger = false;
-                rb.useGravity = true;
-                rb.isKinematic = false;
+                rb.useGravity = false;
+                rb.isKinematic = true;
 
                 anim.SetBool("isGrounded", true);
                 anim.SetBool("TopEnemy", false);
@@ -154,7 +154,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
                 GetComponent<MoveToTarget>().Activate(mainBody.transform);
 
                 col.isTrigger = false;
-                rb.useGravity = true;
+                rb.useGravity = false;
                 rb.isKinematic = true;
 
                 anim.SetBool("isGrounded", true);

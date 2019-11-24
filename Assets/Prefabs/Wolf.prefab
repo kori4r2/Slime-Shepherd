@@ -96,7 +96,7 @@ Transform:
   m_GameObject: {fileID: 5837177158069516467}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 6007907673879552536}
   - {fileID: 9004908095284205887}
@@ -178,8 +178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538c85642d0c8b946801ea6e4d05b863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 1.5872442
-  minDistance: 1.0872442
+  maxDistance: 2.1308663
+  minDistance: 1.6308663
   target: {fileID: 0}
 --- !u!95 &2412483346109831687
 Animator:
@@ -224,12 +224,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 5837177158069516467}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.6
+  m_Radius: 0.4
   m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 954.9297
-  m_StoppingDistance: 1.0872442
+  m_StoppingDistance: 1.6308663
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
