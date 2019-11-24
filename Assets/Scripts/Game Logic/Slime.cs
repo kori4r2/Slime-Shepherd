@@ -31,11 +31,10 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
     public static int HerdSize {
         get => herdSize;
         private set{
-            // Debug.Log("New herdsize = " + value);
             herdSize = value;
-            if(herdSize <= 0){
-                GameManager.instance.GameOver();
-            }
+            // if(herdSize <= 0){
+            //     GameManager.instance.GameOver();
+            // }
         }
     }
     public SlimeState CurrentState { get; private set; }
@@ -63,7 +62,7 @@ public class Slime : MonoBehaviour, IProjectile, IDamageable
         initialPosition = transform.position;
         if(isMainBody){
             mainBody = this;
-            size = GetComponent<Launcher>().Ammo;
+            size = 0;
         }else{
             GetComponent<MoveToTarget>().target = mainBody.transform;
             SetState(SlimeState.Null);
